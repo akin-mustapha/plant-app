@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Plant App</title>
+    <link type="text/css" rel="stylesheet" href="./style.css">
+  </head>
+
+  <body>
+    <header>
+        <h1>Plant App</h1>
+    </header>
+
+    <main>
+      <section class="plant-form">
+
+        <form>
+          <div class="form-input">
+            <label for="name">Common Name:</label>
+            <input type="text" id="name" name="name" placeholder="e.g. Tradescantia">
+          </div>
+
+          <div class="form-input">
+            <label for="scientific">Scientific Name:</label>
+            <input type="text" id="scientific" name="scientific" placeholder="e.g. Tradescantia zebrina">
+          </div>
+
+          <div class="form-input">
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" placeholder="e.g. Living room">
+          </div>
+
+          <div class="form-input">
+            <label for="nickname">Nickname:</label>
+            <input type="text" id="nickname" name="nickname" placeholder="e.g. Zebra Plant">
+          </div>
+
+          <div class="form-input">
+            <label for="dateAcquired">Date Acquired:</label>
+            <input type="date" id="dateAcquired" name="dateAcquired">
+          </div>
+
+          <div class="form-input">
+            <label for="status">Status:</label>
+            <select id="status" name="status">
+              <option value="healthy">Healthy</option>
+              <option value="sick">Sick</option>
+              <option value="dead">Dead</option>
+            </select>
+          </div>
+
+          <div class="form-input">
+            <label for="notes">Notes:</label>
+            <textarea id="notes" name="notes" placeholder="Enter some notes"></textarea>
+          </div>
+
+          <fieldset>
+            <legend>Preference</legend>
+            <div class="form-input">
+              <label for="humidity">Humidity:</label>
+              <select id="humidity" name="humidity">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+
+            <div class="form-input">
+              <label for="temperature">Temperature:</label>
+              <input type="text" id="temperature" name="temperature" placeholder="Enter temperature range">
+            </div>
+
+            <div class="form-input">
+              <label for="watering">Watering:</label>
+              <input type="text" id="watering" name="watering" placeholder="Enter watering instructions">
+            </div>
+
+            <div class="form-input">
+              <label for="light">Light:</label>
+              <select id="light" name="light">
+                <option value="brightIndirect">Bright indirect</option>
+                <option value="direct">Direct</option>
+                <option value="lowLight">Low light</option>
+              </select>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Routine</legend>
+            <div class="form-input">
+              <label for="checkDaily">Check Daily:</label>
+              <input type="checkbox" id="checkDaily" name="checkDaily">
+            </div>
+            <div class="form-input">
+              <label for="fertilizeFrequency">Fertilize Frequency:</label>
+              <input type="text" id="fertilizeFrequency" name="fertilizeFrequency" placeholder="Enter fertilize frequency">
+            </div>
+          </fieldset>
+          <button type="submit">Submit</button>
+        </form>
+
+      </section>
+
+    </main> 
+  </body>
+
+</html>
