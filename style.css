@@ -3,7 +3,10 @@ html {
 }
 
 body {
-
+  margin: 0;
+  padding: 20px;
+}
+.plant-section {
   background-color: #f0f0f0;
   display: grid;
   grid: auto / 1fr;
@@ -44,11 +47,27 @@ form div {
   box-sizing: border-box;
 }
 
-
 button {
   margin-top: 20px;
   padding: 12px 20px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.plant-card {
+  display: grid;
+  grid-template-columns: auto auto;
+  width: 800px;
+  height: 200px;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.plant-image {
+  width: 150px;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
 }
