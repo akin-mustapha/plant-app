@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>Plant App</title>
-    <link type="text/css" rel="stylesheet" href="./style.css">
+    <link type="text/css" rel="stylesheet" href="./src/style/style.css">
   </head>
 
   <body>
@@ -12,13 +12,14 @@
         <nav>
           <ul>
             <li><a href="index.html">Add Plant</a></li>
-            <li><a href="plants.html">View Plants</a></li>
+            <li><a href="./src/pages/plants.html">View Plants</a></li>
           </ul>
         </nav>
     </header>
 
     <main class="plant-section">
       <section class="plant-form">
+        <p data-status-message aria-live="polite"></p>
 
         <form>
           <div class="form-input">
@@ -108,6 +109,8 @@
       </section>
 
     </main> 
+
+    <script type="module" src="./src/javascript/index.js"></script>
   </body>
 
 </html>
