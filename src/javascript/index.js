@@ -25,12 +25,30 @@ function getFormData(form) {
   };
 }
 
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 function setStatus(message, isError = false) {
   const statusElement = document.querySelector("[data-status-message]");
   if (!statusElement) return;
 
   statusElement.textContent = message;
-  statusElement.style.color = isError ? "#b91c1c" : "#166534";
+  statusElement.classList.toggle("status--error", isError);
+  statusElement.classList.toggle("status--success", !isError && !!message);
+}
+
+// apiClient.get/post return { data, status, statusText, headers }.
+// Unwrap defensively in case api/plant.js changes what it returns.
+function unwrap(response) {
+  return response && typeof response === "object" && "data" in response
+    ? response.data
+    : response;
 }
 
 async function handlePlantFormSubmit(event) {
@@ -50,6 +68,7 @@ async function handlePlantFormSubmit(event) {
     await createPlant(plantData);
     setStatus("Plant created successfully.");
     form.reset();
+    await loadPlants();
   } catch (error) {
     setStatus(error.message || "Unable to create plant.", true);
   } finally {
@@ -71,10 +90,12 @@ function renderPlants(plants) {
 
   listContainer.innerHTML = plants
     .map((plant) => {
-      const name = plant.name || "Unnamed plant";
-      const nickname = plant.nickname || "No nickname";
-      const scientificName = plant.scientificName || plant.scientific || "Unknown";
-      const status = plant.status || "unknown";
+      const name = escapeHtml(plant.name || "Unnamed plant");
+      const nickname = escapeHtml(plant.nickname || "No nickname");
+      const scientificName = escapeHtml(
+        plant.scientificName || plant.scientific || "Unknown"
+      );
+      const status = escapeHtml(plant.status || "unknown");
 
       return `
         <article class="plant-card">
@@ -95,7 +116,8 @@ function renderPlants(plants) {
 async function loadPlants() {
   try {
     setStatus("Loading plants...");
-    const plants = await fetchAllPlants();
+    const response = await fetchAllPlants();
+    const plants = unwrap(response);
     renderPlants(plants);
     setStatus("");
   } catch (error) {
@@ -103,7 +125,7 @@ async function loadPlants() {
   }
 }
 
-const form = document.querySelector("form");
+const form = document.querySelector("[data-plant-form]");
 if (form) {
   form.addEventListener("submit", handlePlantFormSubmit);
 }
