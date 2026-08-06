@@ -1,0 +1,101 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "plant-api",
+    "version" : "2026-07-31 18:26:49UTC"
+  },
+  "servers" : [ {
+    "url" : "https://3y5seu5e00.execute-api.eu-west-1.amazonaws.com/{basePath}",
+    "variables" : {
+      "basePath" : {
+        "default" : "dev"
+      }
+    }
+  } ],
+  "paths" : {
+    "/plants/{id}" : {
+      "get" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for GET /plants/{id}"
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:861580917950:function:plants-backend/invocations",
+          "connectionType" : "INTERNET"
+        }
+      },
+      "put" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for PUT /plants/{id}"
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:861580917950:function:plants-backend/invocations",
+          "connectionType" : "INTERNET"
+        }
+      },
+      "delete" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for DELETE /plants/{id}"
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:861580917950:function:plants-backend/invocations",
+          "connectionType" : "INTERNET"
+        }
+      },
+      "parameters" : [ {
+        "name" : "id",
+        "in" : "path",
+        "description" : "Generated path parameter for id",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      } ]
+    },
+    "/plants" : {
+      "get" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for GET /plants"
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:861580917950:function:plants-backend/invocations",
+          "connectionType" : "INTERNET"
+        }
+      },
+      "post" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for POST /plants"
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:861580917950:function:plants-backend/invocations",
+          "connectionType" : "INTERNET"
+        }
+      }
+    }
+  },
+  "x-amazon-apigateway-importexport-version" : "1.0"
+}
