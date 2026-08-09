@@ -90,10 +90,11 @@ function renderPlants(plants) {
 
   listContainer.innerHTML = plants
     .map((plant) => {
-      const name = escapeHtml(plant.name || "Unnamed plant");
-      const nickname = escapeHtml(plant.nickname || "No nickname");
+      console.log("Rendering plant:", plant);
+      const name = escapeHtml(plant.common_name || "Unnamed plant");
+      const nickname = escapeHtml(plant.nick_name || "No nickname");
       const scientificName = escapeHtml(
-        plant.scientificName || plant.scientific || "Unknown"
+        plant.scientificName || plant.scientific_name || "Unknown"
       );
       const status = escapeHtml(plant.status || "unknown");
 
@@ -106,6 +107,9 @@ function renderPlants(plants) {
               <li>Status: ${status}</li>
               <li>Scientific Name: ${scientificName}</li>
             </ul>
+            <div class="plant-actions">
+              <a href="plant.html?id=${encodeURIComponent(plant.id)}">Show Details</a>
+            </div>
           </div>
         </article>
       `;
@@ -125,6 +129,56 @@ async function loadPlants() {
   }
 }
 
+
+function renderPlantDetails(plant) {
+  const detailsContainer = document.querySelector("[data-plant-details]");
+  if (!detailsContainer) return;
+
+  if (!plant) {
+    detailsContainer.innerHTML = "<p>Plant not found.</p>";
+    return;
+  }
+
+  const name = escapeHtml(plant.common_name || "Unnamed plant");
+  const nickname = escapeHtml(plant.nick_name || "No nickname");
+  const scientificName = escapeHtml(
+    plant.scientificName || plant.scientific_name || "Unknown"
+  );
+  const status = escapeHtml(plant.status || "unknown");
+  const location = escapeHtml(plant.location || "Unknown");
+  const dateAcquired = escapeHtml(plant.date_Acquired || "Unknown");
+  const notes = escapeHtml(plant.notes || "No notes available.");
+
+  detailsContainer.innerHTML = `
+    <h2>${name}</h2>
+    <ul>
+      <li>Nickname: ${nickname}</li>
+      <li>Status: ${status}</li>
+      <li>Scientific Name: ${scientificName}</li>
+      <li>Location: ${location}</li>
+      <li>Date Acquired: ${dateAcquired}</li>
+      <li>Notes: ${notes}</li>
+    </ul>
+  `;
+};
+
+
+async function loadPlantDetails(id) {
+  try {
+    setStatus("Loading plant details...");
+    const response = await fetchPlantById(id);
+    const plant = unwrap(response);
+    if (!plant) {
+      setStatus("Plant not found.", true);
+      return;
+    }
+    renderPlantDetails(plant);
+    setStatus("");
+  } catch (error) {
+    setStatus(error.message || "Unable to load plant details.", true);
+  }
+} 
+
 const form = document.querySelector("[data-plant-form]");
 if (form) {
   form.addEventListener("submit", handlePlantFormSubmit);
@@ -133,3 +187,12 @@ if (form) {
 if (document.querySelector("[data-plant-list]")) {
   loadPlants();
 }
+
+const plant_detail_btn = document.querySelector("[data-plant-detail-btn]");
+
+if (plant_detail_btn) {
+  plant_detail_btn.addEventListener("click", () => {
+    handlePlantDetailButtonClick();
+  });
+}
+
