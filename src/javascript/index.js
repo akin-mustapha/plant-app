@@ -1,15 +1,28 @@
 import { createPlant, fetchAllPlants } from "./api/plant.js";
 
+
+// function Plant(common_name, scientific_name, location, nick_name, date_acquired, status, notes, preference, routine) {
+//   this.common_name = common_name;
+//   this.scientific_name = scientific_name;
+//   this.location = location;
+//   this.nickname = nick_name;
+//   this.dateAcquired = date_acquired;
+//   this.status = status;
+//   this.notes = notes;
+//   this.routine = routine;
+//   this.preference = preference;
+// }
+
 function getFormData(form) {
   const formData = new FormData(form);
   const data = Object.fromEntries(formData.entries());
 
   return {
-    name: data.name || "",
-    scientificName: data.scientific || "",
+    common_name: data.common_name || "",
+    scientific_name: data.scientific_name || "",
     location: data.location || "",
-    nickname: data.nickname || "",
-    dateAcquired: data.dateAcquired || "",
+    nick_name: data.nick_name || "",
+    date_acquired: data.date_acquired || "",
     status: data.status || "healthy",
     notes: data.notes || "",
     preference: {
@@ -53,7 +66,6 @@ function unwrap(response) {
 
 async function handlePlantFormSubmit(event) {
   event.preventDefault();
-
   const form = event.currentTarget;
   const submitButton = form.querySelector("button[type='submit']");
   const originalText = submitButton?.textContent || "Submit";
@@ -63,9 +75,13 @@ async function handlePlantFormSubmit(event) {
     submitButton.textContent = "Submitting...";
   }
 
+
   try {
     const plantData = getFormData(form);
+
     await createPlant(plantData);
+    console.log(plantData);
+
     setStatus("Plant created successfully.");
     form.reset();
     await loadPlants();

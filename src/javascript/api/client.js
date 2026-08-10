@@ -12,7 +12,7 @@ async function request(path, options = {}) {
     ...restOptions,
     headers,
   });
-  
+
   const payload = await response.json().catch(() => null);
 
   return {
