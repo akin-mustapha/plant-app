@@ -1,11 +1,15 @@
 import { createPlant, fetchAllPlants } from "./api/plant.js";
 import { escapeHtml, setStatus, unwrap } from "./utils.js";
+import { fetchPlantById } from "./api/plant.js";
+
+
+const pathParams = new URLSearchParams(window.location.search);
+const plantId = pathParams.get("id");
 
 
 function renderPlantDetails(plant) {
-  const detailsContainer = document.querySelector("[data-plant-details]");
-  if (!detailsContainer) return;
-
+  const detailsContainer = document.querySelector(".data-plant-details");
+  console.log("Rendering plant details:", plant);
   if (!plant) {
     detailsContainer.innerHTML = "<p>Plant not found.</p>";
     return;
@@ -30,6 +34,12 @@ function renderPlantDetails(plant) {
       <li>Location: ${location}</li>
       <li>Date Acquired: ${dateAcquired}</li>
       <li>Notes: ${notes}</li>
+      <li>Humidity Preference: ${escapeHtml(plant.preference?.humidity || "Unknown")}</li>
+      <li>Temperature Preference: ${escapeHtml(plant.preference?.temperature || "Unknown")}</li>
+      <li>Watering Preference: ${escapeHtml(plant.preference?.watering || "Unknown")}</li>
+      <li>Light Preference: ${escapeHtml(plant.preference?.light || "Unknown")}</li>
+      <li>Check Daily: ${plant.routine?.checkDaily ? "Yes" : "No"}</li>
+      <li>Fertilize Frequency: ${escapeHtml(plant.routine?.fertilizeFrequency || "Unknown")}</li>
     </ul>
   `;
 };
@@ -52,10 +62,16 @@ async function loadPlantDetails(id) {
 } 
 
 
-const plant_detail_btn = document.querySelector("[data-plant-detail-btn]");
-
-if (plant_detail_btn) {
-  plant_detail_btn.addEventListener("click", () => {
-    handlePlantDetailButtonClick();
-  });
+if (plantId) {
+  loadPlantDetails(plantId);
+} else {
+  setStatus("No plant ID provided in the URL.", true);
 }
+
+// const plant_detail_btn = document.querySelector("[data-plant-detail-btn]");
+
+// if (plant_detail_btn) {
+//   plant_detail_btn.addEventListener("click", () => {
+//     handlePlantDetailButtonClick();
+//   });
+// }
