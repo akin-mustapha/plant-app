@@ -32,7 +32,7 @@ function renderPlants(plants) {
               <li>Scientific Name: ${scientificName}</li>
             </ul>
             <div class="plant-actions">
-              <a href="plant.html?id=${encodeURIComponent(plant.id)}">Show Details</a>
+              <a class="btn" href="plant.html?id=${encodeURIComponent(plant.plant_id)}">Show Details</a>
             </div>
           </div>
         </article>
@@ -56,3 +56,6 @@ async function loadPlants() {
 if (document.querySelector("[data-plant-list]")) {
   loadPlants();
 }
+
+
+export { loadPlants };
