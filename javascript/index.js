@@ -1,5 +1,6 @@
 import { createPlant, fetchAllPlants } from "./api/plant.js";
 import { escapeHtml, setStatus, unwrap } from "./utils.js";
+import {loadPlants} from "./plants.js";
 
 
 // function Plant(common_name, scientific_name, location, nick_name, date_acquired, status, notes, preference, routine) {
@@ -55,7 +56,6 @@ async function handlePlantFormSubmit(event) {
     const plantData = getFormData(form);
 
     await createPlant(plantData);
-    console.log(plantData);
 
     setStatus("Plant created successfully.");
     form.reset();
