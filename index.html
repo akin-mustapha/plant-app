@@ -7,20 +7,18 @@
   </head>
 
   <body>
-    <header>
-        <h1>Plant App</h1>
-        <nav>
-          <ul>
-            <li><a href="index.html">Add Plant</a></li>
-            <li><a href="plants.html">View Plants</a></li>
-          </ul>
-        </nav>
-    </header>
-
-    <main class="plant-section">
-      <section class="plant-form">
+    <div id="page">
+      <header>
+          <h1>Plant App</h1>
+          <nav>
+            <ul>
+              <li><a href="index.html" class="current">Add Plant</a></li>
+              <li><a href="plants.html">View Plants</a></li>
+            </ul>
+          </nav>
+      </header>
+      <section class="plant-section">
         <p data-status-message aria-live="polite"></p>
-
         <form class="data-plant-form" data-plant-form>
           <div class="form-input">
             <label for="common_name">Common Name:</label>
@@ -105,10 +103,8 @@
           </fieldset>
           <button type="submit">Submit</button>
         </form>
-
       </section>
-
-    </main> 
+    </div>
 
     <script type="module" src="./javascript/index.js"></script>
   </body>

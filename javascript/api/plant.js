@@ -25,3 +25,16 @@ export async function deletePlant(id) {
   const {data} = await client.delete(`/plants/${id}`);
   return data;
 }
+
+
+export async function uploadPlantImage(id, imageFile) {
+  const formData = new FormData();
+  formData.append("image", imageFile);
+
+  const {data} = await client.post(`/plants/${id}/image`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return data;
+}

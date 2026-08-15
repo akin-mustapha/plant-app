@@ -1,6 +1,6 @@
 import { createPlant, fetchAllPlants } from "./api/plant.js";
 import { escapeHtml, setStatus, unwrap } from "./utils.js";
-import { fetchPlantById, deletePlant} from "./api/plant.js";
+import { fetchPlantById, deletePlant, uploadPlantImage} from "./api/plant.js";
 
 
 const pathParams = new URLSearchParams(window.location.search);
@@ -33,6 +33,8 @@ function renderPlantDetails(plant) {
   detailsContainer.innerHTML = `
     <div class="plant-info">
     <h2>${name}</h2>
+    <label for="plant-image">Upload Plant Image:</label>
+    <input type="file" id="plant-image" name="plant-image" accept="image/*" />
     <ul>
       <li>Nickname: ${nickname}</li>
       <li>Status: ${status}</li>
@@ -65,6 +67,21 @@ function renderPlantDetails(plant) {
         })
         .catch((error) => {
           setStatus(error.message || "Unable to delete plant.", true);
+        });
+    });
+  }
+
+  const plantImageInput = document.getElementById("plant-image");
+  if (plantImageInput) {
+    plantImageInput.addEventListener("change", (event) => {
+      const file = event.target.files[0];
+      uploadPlantImage(plantId, file)
+        .then((response) => {
+          setStatus("Image uploaded successfully.");
+          console.log("Image upload response:", response);
+        })
+        .catch((error) => {
+          setStatus(error.message || "Unable to upload image.", true);
         });
     });
   }

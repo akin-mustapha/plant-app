@@ -6,13 +6,13 @@ body {
   margin: 0;
   padding: 20px;
 }
-.plant-section {
+/* .plant-section {
   background-color: #f0f0f0;
   display: grid;
   grid: auto / 1fr;
   justify-items: center;
   padding: 30px;
-}
+} */
 
 form div {
   /* padding: 10px 0; */
