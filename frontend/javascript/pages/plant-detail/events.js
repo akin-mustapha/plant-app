@@ -9,7 +9,7 @@ export function wireDeleteButton(plantId) {
     deletePlant(plantId)
       .then(() => {
         setStatus("Plant deleted successfully.");
-        window.location.href = "plants.html";
+        window.location.href = "../index.html";
       })
       .catch((error) => {
         setStatus(error.message || "Unable to delete plant.", true);
