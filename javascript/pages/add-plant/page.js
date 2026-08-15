@@ -1,19 +1,6 @@
-import { createPlant, fetchAllPlants } from "./api/plant.js";
-import { escapeHtml, setStatus, unwrap } from "./utils.js";
-import {loadPlants} from "./plants.js";
-
-
-// function Plant(common_name, scientific_name, location, nick_name, date_acquired, status, notes, preference, routine) {
-//   this.common_name = common_name;
-//   this.scientific_name = scientific_name;
-//   this.location = location;
-//   this.nickname = nick_name;
-//   this.dateAcquired = date_acquired;
-//   this.status = status;
-//   this.notes = notes;
-//   this.routine = routine;
-//   this.preference = preference;
-// }
+import { createPlant } from "../../api/plant.js";
+import { setStatus } from "../../utils.js";
+import { loadPlants } from "../plant-list/page.js";
 
 function getFormData(form) {
   const formData = new FormData(form);
@@ -50,7 +37,6 @@ async function handlePlantFormSubmit(event) {
     submitButton.disabled = true;
     submitButton.textContent = "Submitting...";
   }
-
 
   try {
     const plantData = getFormData(form);

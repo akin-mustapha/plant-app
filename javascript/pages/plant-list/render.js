@@ -1,9 +1,6 @@
-import { createPlant, fetchAllPlants } from "./api/plant.js";
-import { escapeHtml, setStatus, unwrap } from "./utils.js";
+import { escapeHtml } from "../../utils.js";
 
-
-
-function renderPlants(plants) {
+export function renderPlants(plants) {
   const listContainer = document.querySelector("[data-plant-list]");
   if (!listContainer) return;
 
@@ -14,7 +11,6 @@ function renderPlants(plants) {
 
   listContainer.innerHTML = plants
     .map((plant) => {
-      console.log("Rendering plant:", plant);
       const name = escapeHtml(plant.common_name || "Unnamed plant");
       const nickname = escapeHtml(plant.nick_name || "No nickname");
       const scientificName = escapeHtml(
@@ -40,22 +36,3 @@ function renderPlants(plants) {
     })
     .join("");
 }
-
-async function loadPlants() {
-  try {
-    setStatus("Loading plants...");
-    const response = await fetchAllPlants();
-    const plants = unwrap(response);
-    renderPlants(plants);
-    setStatus("");
-  } catch (error) {
-    setStatus(error.message || "Unable to load plants.", true);
-  }
-}
-
-if (document.querySelector("[data-plant-list]")) {
-  loadPlants();
-}
-
-
-export { loadPlants };
