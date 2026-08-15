@@ -2,6 +2,17 @@
 
 **Overview:**
 
+## Tech Stack
+
+- **Frontend:** JavaScript / CSS / HTML
+- **Hosting:** AWS Amplify
+- **API Gateway:** AWS API Gateway
+- **Backend:** AWS Lambda
+- **Database:** DynamoDB
+- **Storage:** S3
+
+Amplify hosts the static frontend, which calls API Gateway to invoke Lambda functions. Lambda reads and writes plant records in DynamoDB and plant images in S3. Backend and infrastructure are currently configured manually in the AWS console (not yet in this repo).
+
 ## Functional Requirements
 
 - **F1:** Create new plant entry
