@@ -24,7 +24,7 @@ function renderCard(plant) {
     : `<div class="plant-image-wrap"><div class="plant-image-initial">${initial}</div><div class="plant-image-note">no photo yet</div></div>`;
 
   return `
-    <a class="plant-card" href="plant.html?id=${encodeURIComponent(plant.plant_id)}">
+    <a class="plant-card" href="pages/plant.html?id=${encodeURIComponent(plant.plant_id)}">
       ${media}
       <div class="plant-card-body">
         <div class="plant-card-title-row">
