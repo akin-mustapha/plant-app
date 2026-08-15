@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Plant App</title>
+    <link type="text/css" rel="stylesheet" href="../style/style.css">
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <h1>Plant App</h1>
+        <a class="btn btn-primary" href="../index.html">+ Add plant</a>
+      </div>
+    </header>
+
+    <main>
+      <p data-status-message aria-live="polite"></p>
+      <div class="plant-list-header">
+        <h2>Your plants</h2>
+        <div class="status-filters" data-status-filters>
+          <button type="button" class="status-filter active" data-filter="all">All</button>
+          <button type="button" class="status-filter" data-filter="healthy">Healthy</button>
+          <button type="button" class="status-filter" data-filter="sick">Sick</button>
+          <button type="button" class="status-filter" data-filter="dead">Dead</button>
+        </div>
+      </div>
+      <div class="plant-grid" data-plant-list></div>
+    </main>
+
+    <script type="module" src="../javascript/pages/plant-list/page.js"></script>
+  </body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Plant App</title>
+    <link type="text/css" rel="stylesheet" href="./style/style.css">
+  </head>
+
+  <body>
+    <header>
+      <div class="header-inner">
+        <h1>Plant App</h1>
+        <a class="btn" href="pages/plants.html">← All plants</a>
+      </div>
+    </header>
+    <main class="plant-form-page">
+        <form data-plant-form>
+          <div class="form-intro">
+            <h2>Add a plant</h2>
+            <p>Photos are added afterwards, from the plant's page.</p>
+          </div>
+
+          <p data-status-message aria-live="polite"></p>
+
+          <fieldset>
+            <legend>1 — Identity</legend>
+            <div class="form-grid">
+              <div class="form-input">
+                <label for="common_name">Common name</label>
+                <input type="text" id="common_name" name="common_name" placeholder="Monstera">
+              </div>
+
+              <div class="form-input">
+                <label for="scientific_name">Scientific name</label>
+                <input type="text" id="scientific_name" name="scientific_name" placeholder="Monstera deliciosa">
+              </div>
+
+              <div class="form-input">
+                <label for="nick_name">Nickname</label>
+                <input type="text" id="nick_name" name="nick_name" placeholder="Monty">
+              </div>
+
+              <div class="form-input">
+                <label for="location">Location</label>
+                <input type="text" id="location" name="location" placeholder="Living room">
+              </div>
+
+              <div class="form-input">
+                <label for="date_acquired">Date acquired</label>
+                <input type="date" id="date_acquired" name="date_acquired">
+              </div>
+
+              <div class="form-input">
+                <label for="status">Status</label>
+                <select id="status" name="status">
+                  <option value="healthy">Healthy</option>
+                  <option value="sick">Sick</option>
+                  <option value="dead">Dead</option>
+                </select>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>2 — Care preferences</legend>
+            <div class="form-grid">
+              <div class="form-input">
+                <label for="humidity">Humidity</label>
+                <select id="humidity" name="humidity">
+                  <option value="low">Low</option>
+                  <option value="medium" selected>Medium</option>
+                  <option value="high">High</option>
+                </select>
+              </div>
+
+              <div class="form-input">
+                <label for="temperature">Temperature range</label>
+                <input type="text" id="temperature" name="temperature" placeholder="18–27 °C">
+              </div>
+
+              <div class="form-input span-2">
+                <label for="light">Light</label>
+                <select id="light" name="light">
+                  <option value="brightIndirect">Bright indirect</option>
+                  <option value="direct">Direct</option>
+                  <option value="lowLight">Low light</option>
+                </select>
+              </div>
+
+              <div class="form-input span-2">
+                <label for="watering">Watering instructions</label>
+                <textarea id="watering" name="watering" rows="2" placeholder="Water when the top 5 cm of soil is dry — roughly weekly in summer, every two weeks in winter."></textarea>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>3 — Routine &amp; notes</legend>
+            <div class="form-grid">
+              <div class="form-input">
+                <label for="checkDaily">Check daily?</label>
+                <select id="checkDaily" name="checkDaily">
+                  <option value="">No</option>
+                  <option value="on">Yes</option>
+                </select>
+              </div>
+
+              <div class="form-input">
+                <label for="fertilizeFrequency">Fertilize frequency</label>
+                <input type="text" id="fertilizeFrequency" name="fertilizeFrequency" placeholder="Monthly, spring–summer">
+              </div>
+
+              <div class="form-input span-2">
+                <label for="notes">Notes</label>
+                <textarea id="notes" name="notes" rows="3" placeholder="Anything worth remembering about this plant."></textarea>
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="form-actions">
+            <button type="submit" class="btn-primary">Save plant</button>
+            <a class="btn" href="pages/plants.html">Cancel</a>
+          </div>
+        </form>
+      </main>
+
+    <script type="module" src="./javascript/pages/add-plant/page.js"></script>
+  </body>
+
+</html>
