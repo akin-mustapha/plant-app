@@ -186,8 +186,9 @@ def request_plant_image_upload_url(event):
 
     plant_id = body.get("plant_id", None)
     file_name = body.get("file_name", None)
+    content_type = body.get("content_type") or "image/jpeg"
 
-    upload_url = plant_service.generate_plant_image_upload_url(plant_id, file_name)
+    upload_url = plant_service.generate_plant_image_upload_url(plant_id, file_name, content_type)
 
     return {
         "statusCode": 200,
@@ -256,7 +257,7 @@ class PlantService:
 
         return delete_result
     
-    def generate_plant_image_upload_url(self, plant_id: str, file_name: str):
+    def generate_plant_image_upload_url(self, plant_id: str, file_name: str, content_type: str = "image/jpeg"):
         key = f"uploads/{uuid.uuid4()}-{file_name}"
 
         presigned_url = self.s3_client.generate_presigned_url(
@@ -264,7 +265,7 @@ class PlantService:
             Params={
                 "Bucket": self.plant_bucket,
                 "Key": key,
-                "ContentType": "image/jpeg"
+                "ContentType": content_type
             },
             ExpiresIn=300  # 5 minutes
         )

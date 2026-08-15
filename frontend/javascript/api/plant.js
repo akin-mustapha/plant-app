@@ -28,13 +28,28 @@ export async function deletePlant(id) {
 
 
 export async function uploadPlantImage(id, imageFile) {
-  const formData = new FormData();
-  formData.append("image", imageFile);
+  const contentType = imageFile.type || "image/jpeg";
 
-  const {data} = await client.post(`/plants/${id}/image`, formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
+  const { data } = await client.post(`/plants/${id}/image/upload-url`, {
+    plant_id: id,
+    file_name: imageFile.name,
+    content_type: contentType,
   });
-  return data;
+  const { uploadUrl, key } = data;
+
+  const uploadResponse = await fetch(uploadUrl, {
+    method: "PUT",
+    headers: { "Content-Type": contentType },
+    body: imageFile,
+  });
+
+  if (!uploadResponse.ok) {
+    throw new Error("Unable to upload image to storage.");
+  }
+
+  const { data: confirmation } = await client.post(`/plants/${id}/image/confirm`, {
+    plant_id: id,
+    key,
+  });
+  return confirmation;
 }
