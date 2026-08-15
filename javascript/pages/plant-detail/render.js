@@ -10,10 +10,10 @@ export function renderPlantDetails(plant) {
 
   const name = escapeHtml(plant.common_name || "Unnamed plant");
   const nickname = escapeHtml(plant.nick_name || "No nickname");
-  const scientificName = escapeHtml(plant.scientificName || plant.scientific_name || "Unknown");
+  const scientificName = escapeHtml(plant.scientific_name || "Unknown");
   const status = escapeHtml(plant.status || "unknown");
   const location = escapeHtml(plant.location || "Unknown");
-  const dateAcquired = escapeHtml(plant.date_Acquired || "Unknown");
+  const dateAcquired = escapeHtml(plant.date_acquired || "Unknown");
   const notes = escapeHtml(plant.notes || "No notes available.");
   const humidityPreference = escapeHtml(plant.preference?.humidity || "Unknown");
   const temperaturePreference = escapeHtml(plant.preference?.temperature || "Unknown");

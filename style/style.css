@@ -71,4 +71,31 @@ button {
   height: 100%;
   object-fit: cover;
   border-radius: 5px;
+  background-color: #f0f0f0;
+}
+
+.plant-info h2 {
+  margin: 0 0 10px;
+}
+
+.plant-fields {
+  margin: 0;
+}
+
+.plant-field {
+  display: flex;
+  gap: 6px;
+  padding: 4px 0;
+  font-size: 14px;
+}
+
+.plant-field dt {
+  color: #666666;
+  min-width: 130px;
+}
+
+.plant-field dd {
+  margin: 0;
+  color: #000000;
+  font-weight: 600;
 }
