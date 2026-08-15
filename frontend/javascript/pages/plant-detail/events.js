@@ -23,9 +23,13 @@ export function wireImageUpload(plantId) {
 
   plantImageInput.addEventListener("change", (event) => {
     const file = event.target.files[0];
+    if (!file) return;
+
+    setStatus("Uploading image...");
     uploadPlantImage(plantId, file)
-      .then((response) => {
+      .then(() => {
         setStatus("Image uploaded successfully.");
+        window.location.reload();
       })
       .catch((error) => {
         setStatus(error.message || "Unable to upload image.", true);
