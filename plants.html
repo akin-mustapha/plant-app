@@ -7,20 +7,24 @@
   </head>
   <body>
     <header>
-      <h1>Plant App</h1>
-      <nav>
-        <ul>
-          <li><a href="index.html">Add Plant</a></li>
-          <li><a href="plants.html">View Plants</a></li>
-        </ul>
-      </nav>
+      <div class="header-inner">
+        <h1>Plant App</h1>
+        <a class="btn btn-primary" href="index.html">+ Add plant</a>
+      </div>
     </header>
 
     <main>
-      <section class="plant-list">
-        <p data-status-message aria-live="polite"></p>
-        <div data-plant-list></div>
-      </section>
+      <p data-status-message aria-live="polite"></p>
+      <div class="plant-list-header">
+        <h2>Your plants</h2>
+        <div class="status-filters" data-status-filters>
+          <button type="button" class="status-filter active" data-filter="all">All</button>
+          <button type="button" class="status-filter" data-filter="healthy">Healthy</button>
+          <button type="button" class="status-filter" data-filter="sick">Sick</button>
+          <button type="button" class="status-filter" data-filter="dead">Dead</button>
+        </div>
+      </div>
+      <div class="plant-grid" data-plant-list></div>
     </main>
 
     <script type="module" src="./javascript/pages/plant-list/page.js"></script>

@@ -7,104 +7,122 @@
   </head>
 
   <body>
-    <div id="page">
-      <header>
-          <h1>Plant App</h1>
-          <nav>
-            <ul>
-              <li><a href="index.html" class="current">Add Plant</a></li>
-              <li><a href="plants.html">View Plants</a></li>
-            </ul>
-          </nav>
-      </header>
-      <section class="plant-section">
-        <p data-status-message aria-live="polite"></p>
-        <form class="data-plant-form" data-plant-form>
-          <div class="form-input">
-            <label for="common_name">Common Name:</label>
-            <input type="text" id="common_name" name="common_name" placeholder="e.g. Tradescantia">
+    <header>
+      <div class="header-inner">
+        <h1>Plant App</h1>
+        <a class="btn" href="plants.html">← All plants</a>
+      </div>
+    </header>
+    <main class="plant-form-page">
+        <form data-plant-form>
+          <div class="form-intro">
+            <h2>Add a plant</h2>
+            <p>Photos are added afterwards, from the plant's page.</p>
           </div>
 
-          <div class="form-input">
-            <label for="scientific_name">Scientific Name:</label>
-            <input type="text" id="scientific_name" name="scientific_name" placeholder="e.g. Tradescantia zebrina">
-          </div>
-
-          <div class="form-input">
-            <label for="location">Location:</label>
-            <input type="text" id="location" name="location" placeholder="e.g. Living room">
-          </div>
-
-          <div class="form-input">
-            <label for="nick_name">Nickname:</label>
-            <input type="text" id="nick_name" name="nick_name" placeholder="e.g. Zebra Plant">
-          </div>
-
-          <div class="form-input">
-            <label for="date_acquired">Date Acquired:</label>
-            <input type="date" id="date_acquired" name="date_acquired">
-          </div>
-
-          <div class="form-input">
-            <label for="status">Status:</label>
-            <select id="status" name="status">
-              <option value="healthy">Healthy</option>
-              <option value="sick">Sick</option>
-              <option value="dead">Dead</option>
-            </select>
-          </div>
-
-          <div class="form-input">
-            <label for="notes">Notes:</label>
-            <textarea id="notes" name="notes" placeholder="Enter some notes"></textarea>
-          </div>
+          <p data-status-message aria-live="polite"></p>
 
           <fieldset>
-            <legend>Preference</legend>
-            <div class="form-input">
-              <label for="humidity">Humidity:</label>
-              <select id="humidity" name="humidity">
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-              </select>
-            </div>
+            <legend>1 — Identity</legend>
+            <div class="form-grid">
+              <div class="form-input">
+                <label for="common_name">Common name</label>
+                <input type="text" id="common_name" name="common_name" placeholder="Monstera">
+              </div>
 
-            <div class="form-input">
-              <label for="temperature">Temperature:</label>
-              <input type="text" id="temperature" name="temperature" placeholder="Enter temperature range">
-            </div>
+              <div class="form-input">
+                <label for="scientific_name">Scientific name</label>
+                <input type="text" id="scientific_name" name="scientific_name" placeholder="Monstera deliciosa">
+              </div>
 
-            <div class="form-input">
-              <label for="watering">Watering:</label>
-              <input type="text" id="watering" name="watering" placeholder="Enter watering instructions">
-            </div>
+              <div class="form-input">
+                <label for="nick_name">Nickname</label>
+                <input type="text" id="nick_name" name="nick_name" placeholder="Monty">
+              </div>
 
-            <div class="form-input">
-              <label for="light">Light:</label>
-              <select id="light" name="light">
-                <option value="brightIndirect">Bright indirect</option>
-                <option value="direct">Direct</option>
-                <option value="lowLight">Low light</option>
-              </select>
+              <div class="form-input">
+                <label for="location">Location</label>
+                <input type="text" id="location" name="location" placeholder="Living room">
+              </div>
+
+              <div class="form-input">
+                <label for="date_acquired">Date acquired</label>
+                <input type="date" id="date_acquired" name="date_acquired">
+              </div>
+
+              <div class="form-input">
+                <label for="status">Status</label>
+                <select id="status" name="status">
+                  <option value="healthy">Healthy</option>
+                  <option value="sick">Sick</option>
+                  <option value="dead">Dead</option>
+                </select>
+              </div>
             </div>
           </fieldset>
 
           <fieldset>
-            <legend>Routine</legend>
-            <div class="form-input">
-              <label for="checkDaily">Check Daily:</label>
-              <input type="checkbox" id="checkDaily" name="checkDaily">
-            </div>
-            <div class="form-input">
-              <label for="fertilizeFrequency">Fertilize Frequency:</label>
-              <input type="text" id="fertilizeFrequency" name="fertilizeFrequency" placeholder="Enter fertilize frequency">
+            <legend>2 — Care preferences</legend>
+            <div class="form-grid">
+              <div class="form-input">
+                <label for="humidity">Humidity</label>
+                <select id="humidity" name="humidity">
+                  <option value="low">Low</option>
+                  <option value="medium" selected>Medium</option>
+                  <option value="high">High</option>
+                </select>
+              </div>
+
+              <div class="form-input">
+                <label for="temperature">Temperature range</label>
+                <input type="text" id="temperature" name="temperature" placeholder="18–27 °C">
+              </div>
+
+              <div class="form-input span-2">
+                <label for="light">Light</label>
+                <select id="light" name="light">
+                  <option value="brightIndirect">Bright indirect</option>
+                  <option value="direct">Direct</option>
+                  <option value="lowLight">Low light</option>
+                </select>
+              </div>
+
+              <div class="form-input span-2">
+                <label for="watering">Watering instructions</label>
+                <textarea id="watering" name="watering" rows="2" placeholder="Water when the top 5 cm of soil is dry — roughly weekly in summer, every two weeks in winter."></textarea>
+              </div>
             </div>
           </fieldset>
-          <button type="submit">Submit</button>
+
+          <fieldset>
+            <legend>3 — Routine &amp; notes</legend>
+            <div class="form-grid">
+              <div class="form-input">
+                <label for="checkDaily">Check daily?</label>
+                <select id="checkDaily" name="checkDaily">
+                  <option value="">No</option>
+                  <option value="on">Yes</option>
+                </select>
+              </div>
+
+              <div class="form-input">
+                <label for="fertilizeFrequency">Fertilize frequency</label>
+                <input type="text" id="fertilizeFrequency" name="fertilizeFrequency" placeholder="Monthly, spring–summer">
+              </div>
+
+              <div class="form-input span-2">
+                <label for="notes">Notes</label>
+                <textarea id="notes" name="notes" rows="3" placeholder="Anything worth remembering about this plant."></textarea>
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="form-actions">
+            <button type="submit" class="btn-primary">Save plant</button>
+            <a class="btn" href="plants.html">Cancel</a>
+          </div>
         </form>
-      </section>
-    </div>
+      </main>
 
     <script type="module" src="./javascript/pages/add-plant/page.js"></script>
   </body>
