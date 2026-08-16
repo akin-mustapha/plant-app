@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://3y5seu5e00.execute-api.eu-west-1.amazonaws.com/dev";
+const API_BASE_URL = "https://25gqp3p1vi.execute-api.eu-west-1.amazonaws.com/dev";
 
 async function request(path, options = {}) {
   const { headers: customHeaders, ...restOptions } = options;
