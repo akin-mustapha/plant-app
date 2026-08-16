@@ -47,6 +47,7 @@ export function renderPlantDetails(plant) {
 
   detailsContainer.innerHTML = `
     <div class="plant-detail">
+    
       <div class="plant-detail-media">
         <div class="plant-detail-photo">${photo}</div>
         <label class="upload-label btn" for="plant-image">↑ Upload a photo
