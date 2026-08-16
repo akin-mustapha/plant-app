@@ -376,19 +376,28 @@ class PlantRepository:
                     "plant_id": plant_id
                 },
                 UpdateExpression="""
-                    set common_name=:cn,
-                    nick_name=:nn,
-                    scientific_name=:sn,
-                    notes=:n,
-                    date_acquired=:da,
-                    location=:l,
+                    set #cn=:cn,
+                    #nn=:nn,
+                    #sn=:sn,
+                    #n=:n,
+                    #da=:da,
+                    #loc=:l,
                     #st=:s,
-                    routine=:r,
-                    preference=:p,
-                    active=:a
+                    #r=:r,
+                    #p=:p,
+                    #a=:a
                 """,
                 ExpressionAttributeNames={
-                    "#st": "status"
+                    "#cn": "common_name",
+                    "#nn": "nick_name",
+                    "#sn": "scientific_name",
+                    "#n": "notes",
+                    "#da": "date_acquired",
+                    "#loc": "location",
+                    "#st": "status",
+                    "#r": "routine",
+                    "#p": "preference",
+                    "#a": "active"
                 },
                 ExpressionAttributeValues={
                     ":cn": plant.common_name,
