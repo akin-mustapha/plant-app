@@ -102,6 +102,10 @@ header h1 {
   flex-shrink: 0;
 }
 
+.plant-detail-title-link {
+  display: none;
+}
+
 header h1::before {
   content: '';
   display: inline-block;
@@ -170,6 +174,18 @@ button[type='submit'] {
 button[type='submit']:hover {
   background: var(--fern-dark);
   border-color: var(--fern-dark);
+}
+
+.btn-dark {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+.btn-dark:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+  opacity: 0.9;
 }
 
 button:disabled {
@@ -311,8 +327,8 @@ button:disabled {
 }
 
 .plant-nick {
-  font-size: 14px;
-  color: var(--ink);
+  font-weight: 400;
+  color: var(--ink-faint);
 }
 
 .plant-sci {
@@ -419,6 +435,14 @@ button:disabled {
   font-size: 76px;
 }
 
+.upload-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+}
+
 .upload-label input[type='file'] {
   display: none;
 }
@@ -430,53 +454,41 @@ button:disabled {
   margin: 0;
 }
 
-.record-meta {
-  border-top: 1px solid var(--hairline);
-  padding-top: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.record-meta .label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-}
-
-.record-meta .value {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--ink-soft);
-}
-
 .plant-detail-main {
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 16px;
   min-width: 0;
 }
 
 .plant-detail-heading {
+  background: var(--paper-field);
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  padding: 20px 22px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .plant-detail-heading .title-row {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
   gap: 14px;
-  flex-wrap: wrap;
 }
 
 .plant-detail-heading h2 {
   font-family: var(--font-serif);
   font-weight: 700;
-  font-size: 34px;
+  font-size: 24px;
   margin: 0;
+}
+
+.plant-detail-heading .name-sci-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 32px;
 }
 
 .plant-detail-heading .nick {
@@ -484,25 +496,25 @@ button:disabled {
 }
 
 .plant-detail-heading .sci {
-  font-size: 16px;
+  font-size: 15px;
   font-style: italic;
   color: var(--ink-faint);
 }
 
 .plant-detail-heading .meta-row {
-  display: flex;
-  gap: 24px;
-  font-size: 15px;
-  flex-wrap: wrap;
-}
-
-.plant-detail-heading .meta-row .k {
-  color: var(--ink-faint);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 32px;
+  margin-top: 6px;
+  padding-top: 18px;
+  border-top: 1px solid var(--hairline);
 }
 
 .detail-section {
-  border-top: 1px solid var(--hairline);
-  padding-top: 22px;
+  background: var(--paper-field);
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  padding: 20px 22px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -545,27 +557,24 @@ button:disabled {
 }
 
 .detail-actions {
-  margin-top: 6px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border);
-  display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  gap: 12px;
+  justify-content: space-between;
+  gap: 16px;
   flex-wrap: wrap;
 }
 
-.detail-actions .btn,
-.detail-actions .btn-delete {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+.detail-actions-hint {
+  font-size: 13px;
+  color: var(--ink-faint);
+  margin: 0;
 }
 
-.btn-icon {
-  width: 15px;
-  height: 15px;
-  flex-shrink: 0;
+.detail-actions-buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 /* ---------- add plant form ---------- */
@@ -713,6 +722,111 @@ fieldset legend,
 
   .form-input.span-2 {
     grid-column: span 1;
+  }
+
+  .plant-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .plant-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 14px;
+  }
+
+  .plant-image-wrap {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 8px;
+  }
+
+  .plant-image-wrap .plant-image-initial {
+    font-size: 22px;
+  }
+
+  .plant-image-wrap .plant-image-note {
+    display: none;
+  }
+
+  .plant-card-body {
+    padding: 0;
+    flex: 1;
+    min-width: 0;
+    gap: 2px;
+  }
+
+  .plant-card-title-row {
+    justify-content: flex-start;
+    gap: 6px;
+  }
+
+  .plant-card-title-row h2 {
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .plant-card-title-row .status-chip {
+    order: 3;
+    margin-left: auto;
+  }
+
+  .plant-sci {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .plant-detail-heading h2 {
+    font-size: 19px;
+  }
+
+  .detail-actions {
+    flex-direction: column-reverse;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .detail-actions-buttons {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .app-title,
+  .plant-detail-back {
+    display: none;
+  }
+
+  .plant-detail-title-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--ink);
+    text-decoration: none;
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 19px;
+    min-width: 0;
+  }
+
+  .plant-detail-title-link::before {
+    content: '←';
+    flex-shrink: 0;
+  }
+
+  .plant-detail-title-link span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .plant-detail-title-link .nick {
+    color: var(--ink-faint);
+    font-weight: 400;
   }
 
   .header-inner {

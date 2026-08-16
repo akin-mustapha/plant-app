@@ -40,27 +40,34 @@ export function renderPlantDetails(plant) {
     ? `<img src="${imageUrl}" alt="${name}">`
     : `<div class="plant-image-initial">${initial}</div><div class="plant-image-note">no photo yet</div>`;
 
+  const titleEl = document.querySelector("[data-plant-title]");
+  if (titleEl) {
+    titleEl.innerHTML = `${name} <span class="nick">&ldquo;${nickname}&rdquo;</span>`;
+  }
+
   detailsContainer.innerHTML = `
     <div class="plant-detail">
       <div class="plant-detail-media">
         <div class="plant-detail-photo">${photo}</div>
-        <p class="upload-hint">JPG or PNG, up to 5 MB.</p>
-        <div class="record-meta">
-          <div class="label">Record</div>
-          <div class="value">id: ${plantId}</div>
-        </div>
+        <label class="upload-label btn" for="plant-image">↑ Upload a photo
+          <input type="file" id="plant-image" name="plant-image" accept="image/*" />
+        </label>
+        <p class="upload-hint">JPG or PNG, up to 5 MB. Added after the record is saved.</p>
       </div>
 
       <div class="plant-detail-main">
         <div class="plant-detail-heading">
           <div class="title-row">
-            <h2>${name} <span class="nick">&ldquo;${nickname}&rdquo;</span></h2>
+            <h2>${name}</h2>
             <span class="status-chip status-chip--${status}">${statusLabel}</span>
           </div>
-          <div class="sci">${scientificName}</div>
+          <div class="name-sci-row">
+            <span class="nick">&ldquo;${nickname}&rdquo;</span>
+            <span class="sci">${scientificName}</span>
+          </div>
           <div class="meta-row">
-            <div><span class="k">Location</span> — ${location}</div>
-            <div><span class="k">Acquired</span> — ${dateAcquired}</div>
+            <div class="detail-field"><div class="k">Location</div><div class="v">${location}</div></div>
+            <div class="detail-field"><div class="k">Acquired</div><div class="v">${dateAcquired}</div></div>
           </div>
         </div>
 
@@ -87,29 +94,12 @@ export function renderPlantDetails(plant) {
           <div class="detail-notes">${notes}</div>
         </div>
 
-        <div class="detail-actions">
-          <label class="upload-label btn" for="plant-image">
-            <svg class="btn-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M8 11V2M8 2L4.5 5.5M8 2L11.5 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M2.5 11V12.5C2.5 13.0523 2.94772 13.5 3.5 13.5H12.5C13.0523 13.5 13.5 13.0523 13.5 12.5V11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Upload a photo
-            <input type="file" id="plant-image" name="plant-image" accept="image/*" />
-          </label>
-          <a class="btn" href="add-plant.html?id=${plantId}">
-            <svg class="btn-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M11.5 2.5L13.5 4.5L5 13H3V11L11.5 2.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Edit this plant
-          </a>
-          <button type="button" class="btn-delete">
-            <svg class="btn-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M2.5 4.5H13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              <path d="M6.5 4.5V2.5C6.5 2.22386 6.72386 2 7 2H9C9.27614 2 9.5 2.22386 9.5 2.5V4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M4.5 4.5L5 13C5 13.5523 5.44772 14 6 14H10C10.5523 14 11 13.5523 11 13L11.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Delete this plant
-          </button>
+        <div class="detail-section detail-actions">
+          <p class="detail-actions-hint">Editing or deleting affects this record and its photo.</p>
+          <div class="detail-actions-buttons">
+            <a class="btn" href="add-plant.html?id=${plantId}">Edit plant</a>
+            <button type="button" class="btn-delete">Delete this plant</button>
+          </div>
         </div>
       </div>
     </div>
