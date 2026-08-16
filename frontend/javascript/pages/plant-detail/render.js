@@ -94,7 +94,7 @@ export function renderPlantDetails(plant) {
           <div class="detail-notes">${notes}</div>
         </div>
 
-        <div class="detail-section detail-actions">
+        <div class="detail-actions">
           <p class="detail-actions-hint">Editing or deleting affects this record and its photo.</p>
           <div class="detail-actions-buttons">
             <a class="btn" href="add-plant.html?id=${plantId}">Edit plant</a>
