@@ -641,6 +641,7 @@ fieldset legend,
   gap: 6px;
   margin: 0;
   width: auto;
+  min-width: 0;
 }
 
 .form-input.span-2 {
@@ -667,6 +668,7 @@ fieldset legend,
   color: var(--ink);
   outline: none;
   width: 100%;
+  min-width: 0;
   box-sizing: border-box;
 }
 
