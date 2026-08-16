@@ -105,10 +105,13 @@ header h1 {
 header h1::before {
   content: '';
   display: inline-block;
-  width: 14px;
-  height: 14px;
-  border-radius: 999px;
-  background: var(--fern);
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M12 21V13' stroke='%233E6B4A' stroke-width='1.6' stroke-linecap='round'/%3E%3Cpath d='M12 13C12 13 4 12.5 4 5.5C11 5.5 12 9 12 13Z' fill='%233E6B4A'/%3E%3Cpath d='M12 13C12 13 20 12.5 20 5.5C13 5.5 12 9 12 13Z' fill='%233E6B4A'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
 
 /* ---------- status line ---------- */
@@ -416,22 +419,6 @@ button:disabled {
   font-size: 76px;
 }
 
-.upload-label {
-  border: 1px solid var(--border);
-  color: var(--ink);
-  font-weight: 600;
-  font-size: 14px;
-  padding: 10px 0;
-  border-radius: 999px;
-  text-align: center;
-  cursor: pointer;
-  display: block;
-}
-
-.upload-label:hover {
-  border-color: var(--ink);
-}
-
 .upload-label input[type='file'] {
   display: none;
 }
@@ -561,23 +548,24 @@ button:disabled {
   margin-top: 6px;
   padding-top: 20px;
   border-top: 1px solid var(--border);
-}
-
-.detail-danger {
-  border-top: 1px solid var(--error-border);
-  margin-top: 6px;
-  padding-top: 20px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  justify-content: center;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
-.detail-danger p {
-  font-size: 13px;
-  color: var(--ink-faint);
-  margin: 0;
+.detail-actions .btn,
+.detail-actions .btn-delete {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-icon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
 }
 
 /* ---------- add plant form ---------- */
