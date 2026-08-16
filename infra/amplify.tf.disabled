@@ -1,0 +1,38 @@
+resource "aws_amplify_app" "plant_app" {
+  name         = "plant-app"
+  repository   = var.github_repository
+  access_token = var.github_access_token
+  platform     = "WEB"
+
+  lifecycle {
+    ignore_changes = [access_token]
+  }
+
+  build_spec = <<-YAML
+    version: 1
+    frontend:
+      phases:
+        build:
+          commands: []
+      artifacts:
+        baseDirectory: frontend
+        files:
+          - '**/*'
+      cache:
+        paths: []
+  YAML
+
+  custom_rule {
+    source = "/<*>"
+    target = "frontend/index.html"
+    status = "404-200"
+  }
+}
+
+resource "aws_amplify_branch" "main" {
+  app_id      = aws_amplify_app.plant_app.id
+  branch_name = var.amplify_branch_name
+  stage       = "PRODUCTION"
+
+  enable_auto_build = true
+}
