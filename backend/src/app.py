@@ -233,7 +233,7 @@ class PlantService:
         self.plant_repo = PlantRepository()
 
 
-        self.plant_bucket="plant-app-861580917950-eu-west-1-an"
+        self.plant_bucket="plant-app-images-eu-west-1"
         self.s3_client = boto3.client('s3')
 
     def add_plant(self, plant: Plant):
