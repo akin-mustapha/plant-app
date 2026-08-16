@@ -90,6 +90,10 @@ export function renderPlantDetails(plant) {
           <div class="detail-notes">${notes}</div>
         </div>
 
+        <div class="detail-actions">
+          <a class="btn" href="add-plant.html?id=${plantId}">Edit this plant</a>
+        </div>
+
         <div class="detail-danger">
           <p>Deleting removes the record and its photo permanently.</p>
           <button type="button" class="btn-delete">Delete this plant</button>

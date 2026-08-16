@@ -234,7 +234,11 @@ class PlantService:
 
 
         self.plant_bucket="plant-app-images-eu-west-1"
-        self.s3_client = boto3.client('s3')
+        self.s3_client = boto3.client(
+            's3',
+            region_name='eu-west-1',
+            endpoint_url='https://s3.eu-west-1.amazonaws.com'
+        )
 
     def add_plant(self, plant: Plant):
         self.plant_repo.insert_plant(plant)
