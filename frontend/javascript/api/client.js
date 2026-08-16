@@ -15,6 +15,14 @@ async function request(path, options = {}) {
 
   const payload = await response.json().catch(() => null);
 
+  if (!response.ok) {
+    const message = (payload && payload.message) || response.statusText || "Request failed";
+    const error = new Error(message);
+    error.status = response.status;
+    error.data = payload;
+    throw error;
+  }
+
   return {
     data: payload,
     status: response.status,

@@ -307,6 +307,7 @@ class PlantRepository:
             table.put_item(Item=asdict(plant))
         except ClientError as e:
             logger.error(e)
+            raise
 
     def select_all(self):
         logger.info("Selecting all plants")
@@ -448,4 +449,16 @@ def lambda_handler(event, context):
             'body': json.dumps('Route not found')
         }
 
-    return handler(event)
+    try:
+        return handler(event)
+    except Exception as e:
+        logger.error(e)
+        return {
+            "statusCode": 500,
+            "headers": {
+                "Access-Control-Allow-Origin": "https://main.d2dl67h6vhyf6v.amplifyapp.com",
+                "Access-Control-Allow-Headers": "Content-Type",
+                "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,OPTIONS"
+            },
+            "body": json.dumps({"message": "Internal server error"})
+        }
