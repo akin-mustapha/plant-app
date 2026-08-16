@@ -102,13 +102,20 @@ header h1 {
   flex-shrink: 0;
 }
 
+.plant-detail-title-link {
+  display: none;
+}
+
 header h1::before {
   content: '';
   display: inline-block;
-  width: 14px;
-  height: 14px;
-  border-radius: 999px;
-  background: var(--fern);
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M12 21V13' stroke='%233E6B4A' stroke-width='1.6' stroke-linecap='round'/%3E%3Cpath d='M12 13C12 13 4 12.5 4 5.5C11 5.5 12 9 12 13Z' fill='%233E6B4A'/%3E%3Cpath d='M12 13C12 13 20 12.5 20 5.5C13 5.5 12 9 12 13Z' fill='%233E6B4A'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
 
 /* ---------- status line ---------- */
@@ -167,6 +174,18 @@ button[type='submit'] {
 button[type='submit']:hover {
   background: var(--fern-dark);
   border-color: var(--fern-dark);
+}
+
+.btn-dark {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+.btn-dark:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+  opacity: 0.9;
 }
 
 button:disabled {
@@ -308,8 +327,8 @@ button:disabled {
 }
 
 .plant-nick {
-  font-size: 14px;
-  color: var(--ink);
+  font-weight: 400;
+  color: var(--ink-faint);
 }
 
 .plant-sci {
@@ -391,7 +410,7 @@ button:disabled {
 .plant-detail-media {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
 }
 
 .plant-detail-photo {
@@ -417,19 +436,11 @@ button:disabled {
 }
 
 .upload-label {
-  border: 1px solid var(--border);
-  color: var(--ink);
-  font-weight: 600;
-  font-size: 14px;
-  padding: 10px 0;
-  border-radius: 999px;
-  text-align: center;
-  cursor: pointer;
-  display: block;
-}
-
-.upload-label:hover {
-  border-color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
 }
 
 .upload-label input[type='file'] {
@@ -443,53 +454,41 @@ button:disabled {
   margin: 0;
 }
 
-.record-meta {
-  border-top: 1px solid var(--hairline);
-  padding-top: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.record-meta .label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-}
-
-.record-meta .value {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--ink-soft);
-}
-
 .plant-detail-main {
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 16px;
   min-width: 0;
 }
 
 .plant-detail-heading {
+  background: var(--paper-field);
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  padding: 20px 22px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .plant-detail-heading .title-row {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
   gap: 14px;
-  flex-wrap: wrap;
 }
 
 .plant-detail-heading h2 {
   font-family: var(--font-serif);
   font-weight: 700;
-  font-size: 34px;
+  font-size: 24px;
   margin: 0;
+}
+
+.plant-detail-heading .name-sci-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 32px;
 }
 
 .plant-detail-heading .nick {
@@ -497,25 +496,25 @@ button:disabled {
 }
 
 .plant-detail-heading .sci {
-  font-size: 16px;
+  font-size: 15px;
   font-style: italic;
   color: var(--ink-faint);
 }
 
 .plant-detail-heading .meta-row {
-  display: flex;
-  gap: 24px;
-  font-size: 15px;
-  flex-wrap: wrap;
-}
-
-.plant-detail-heading .meta-row .k {
-  color: var(--ink-faint);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 32px;
+  margin-top: 6px;
+  padding-top: 18px;
+  border-top: 1px solid var(--hairline);
 }
 
 .detail-section {
-  border-top: 1px solid var(--hairline);
-  padding-top: 22px;
+  background: var(--paper-field);
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  padding: 20px 22px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -558,26 +557,26 @@ button:disabled {
 }
 
 .detail-actions {
-  margin-top: 6px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border);
-}
-
-.detail-danger {
-  border-top: 1px solid var(--error-border);
-  margin-top: 6px;
-  padding-top: 20px;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
+  padding-top: 8px;
 }
 
-.detail-danger p {
+.detail-actions-hint {
   font-size: 13px;
   color: var(--ink-faint);
   margin: 0;
+}
+
+.detail-actions-buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 /* ---------- add plant form ---------- */
@@ -648,7 +647,8 @@ fieldset legend,
   grid-column: span 2;
 }
 
-.form-input label {
+.form-input label,
+.form-input-label {
   font-size: 14px;
   font-weight: 600;
   margin: 0;
@@ -694,6 +694,53 @@ fieldset legend,
   padding: 0;
 }
 
+.pill-group {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.pill-option {
+  position: relative;
+  cursor: pointer;
+  flex: 1;
+}
+
+.pill-option:not(:first-child) {
+  border-left: 1px solid var(--border);
+}
+
+.pill-option input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+.pill-option span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 18px;
+  background: var(--paper-field);
+  color: var(--ink);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.pill-option input:checked + span {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.pill-option input:focus-visible + span {
+  outline: 2px solid var(--fern);
+  outline-offset: -2px;
+}
+
 .form-actions {
   display: flex;
   align-items: center;
@@ -719,12 +766,133 @@ fieldset legend,
     grid-template-columns: 1fr;
   }
 
-  .form-grid {
-    grid-template-columns: 1fr;
+  .form-input.mobile-span-2 {
+    grid-column: span 2;
   }
 
-  .form-input.span-2 {
-    grid-column: span 1;
+  .plant-form-page form {
+    gap: 24px;
+  }
+
+  .form-intro p {
+    display: none;
+  }
+
+  .form-intro h2 {
+    font-size: 22px;
+  }
+
+  fieldset legend {
+    display: none;
+  }
+
+  fieldset {
+    gap: 16px;
+  }
+
+  .plant-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .plant-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 14px;
+  }
+
+  .plant-image-wrap {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 8px;
+  }
+
+  .plant-image-wrap .plant-image-initial {
+    font-size: 22px;
+  }
+
+  .plant-image-wrap .plant-image-note {
+    display: none;
+  }
+
+  .plant-card-body {
+    padding: 0;
+    flex: 1;
+    min-width: 0;
+    gap: 2px;
+  }
+
+  .plant-card-title-row {
+    justify-content: flex-start;
+    gap: 6px;
+  }
+
+  .plant-card-title-row h2 {
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .plant-card-title-row .status-chip {
+    order: 3;
+    margin-left: auto;
+  }
+
+  .plant-sci {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .plant-detail-heading h2 {
+    font-size: 19px;
+  }
+
+  .detail-actions {
+    flex-direction: column-reverse;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .detail-actions-buttons {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .app-title,
+  .plant-detail-back {
+    display: none;
+  }
+
+  .plant-detail-title-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--ink);
+    text-decoration: none;
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 19px;
+    min-width: 0;
+  }
+
+  .plant-detail-title-link::before {
+    content: '←';
+    flex-shrink: 0;
+  }
+
+  .plant-detail-title-link span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .plant-detail-title-link .nick {
+    color: var(--ink-faint);
+    font-weight: 400;
   }
 
   .header-inner {

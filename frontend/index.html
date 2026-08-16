@@ -10,7 +10,7 @@
     <header>
       <div class="header-inner">
         <h1>Plant App</h1>
-        <a class="btn btn-primary" href="pages/add-plant.html">+ Add plant</a>
+        <a class="btn btn-dark" href="pages/add-plant.html">+ Add</a>
       </div>
     </header>
 
@@ -19,10 +19,10 @@
       <div class="plant-list-header">
         <h2>Your plants</h2>
         <div class="status-filters" data-status-filters>
-          <button type="button" class="status-filter active" data-filter="all">All</button>
-          <button type="button" class="status-filter" data-filter="healthy">Healthy</button>
-          <button type="button" class="status-filter" data-filter="sick">Sick</button>
-          <button type="button" class="status-filter" data-filter="dead">Dead</button>
+          <button type="button" class="status-filter active" data-filter="all">All · <span data-count>0</span></button>
+          <button type="button" class="status-filter" data-filter="healthy">Healthy · <span data-count>0</span></button>
+          <button type="button" class="status-filter" data-filter="sick">Sick · <span data-count>0</span></button>
+          <button type="button" class="status-filter" data-filter="dead">Dead · <span data-count>0</span></button>
         </div>
       </div>
       <div class="plant-grid" data-plant-list></div>

@@ -6,7 +6,7 @@ const STATUS_LABEL = {
   dead: "Dead",
 };
 
-function statusClass(status) {
+export function statusClass(status) {
   return STATUS_LABEL[status] ? status : "dead";
 }
 
@@ -28,10 +28,9 @@ function renderCard(plant) {
       ${media}
       <div class="plant-card-body">
         <div class="plant-card-title-row">
-          <h2>${name}</h2>
+          <h2>${name} <span class="plant-nick">&ldquo;${nickname}&rdquo;</span></h2>
           <span class="status-chip status-chip--${status}">${statusLabel}</span>
         </div>
-        <div class="plant-nick">&ldquo;${nickname}&rdquo;</div>
         <div class="plant-sci">${scientificName}</div>
       </div>
     </a>

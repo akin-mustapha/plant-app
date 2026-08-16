@@ -40,30 +40,34 @@ export function renderPlantDetails(plant) {
     ? `<img src="${imageUrl}" alt="${name}">`
     : `<div class="plant-image-initial">${initial}</div><div class="plant-image-note">no photo yet</div>`;
 
+  const titleEl = document.querySelector("[data-plant-title]");
+  if (titleEl) {
+    titleEl.innerHTML = `${name} <span class="nick">&ldquo;${nickname}&rdquo;</span>`;
+  }
+
   detailsContainer.innerHTML = `
     <div class="plant-detail">
       <div class="plant-detail-media">
         <div class="plant-detail-photo">${photo}</div>
-        <label class="upload-label" for="plant-image">↑ Upload a photo
+        <label class="upload-label btn" for="plant-image">↑ Upload a photo
           <input type="file" id="plant-image" name="plant-image" accept="image/*" />
         </label>
-        <p class="upload-hint">JPG or PNG, up to 5 MB.</p>
-        <div class="record-meta">
-          <div class="label">Record</div>
-          <div class="value">id: ${plantId}</div>
-        </div>
+        <p class="upload-hint">JPG or PNG, up to 5 MB. Added after the record is saved.</p>
       </div>
 
       <div class="plant-detail-main">
         <div class="plant-detail-heading">
           <div class="title-row">
-            <h2>${name} <span class="nick">&ldquo;${nickname}&rdquo;</span></h2>
+            <h2>${name}</h2>
             <span class="status-chip status-chip--${status}">${statusLabel}</span>
           </div>
-          <div class="sci">${scientificName}</div>
+          <div class="name-sci-row">
+            <span class="nick">&ldquo;${nickname}&rdquo;</span>
+            <span class="sci">${scientificName}</span>
+          </div>
           <div class="meta-row">
-            <div><span class="k">Location</span> — ${location}</div>
-            <div><span class="k">Acquired</span> — ${dateAcquired}</div>
+            <div class="detail-field"><div class="k">Location</div><div class="v">${location}</div></div>
+            <div class="detail-field"><div class="k">Acquired</div><div class="v">${dateAcquired}</div></div>
           </div>
         </div>
 
@@ -91,12 +95,11 @@ export function renderPlantDetails(plant) {
         </div>
 
         <div class="detail-actions">
-          <a class="btn" href="add-plant.html?id=${plantId}">Edit this plant</a>
-        </div>
-
-        <div class="detail-danger">
-          <p>Deleting removes the record and its photo permanently.</p>
-          <button type="button" class="btn-delete">Delete this plant</button>
+          <p class="detail-actions-hint">Editing or deleting affects this record and its photo.</p>
+          <div class="detail-actions-buttons">
+            <a class="btn" href="add-plant.html?id=${plantId}">Edit plant</a>
+            <button type="button" class="btn-delete">Delete this plant</button>
+          </div>
         </div>
       </div>
     </div>
