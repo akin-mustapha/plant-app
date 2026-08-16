@@ -5,15 +5,20 @@ import { loadPlants } from "../plant-list/page.js";
 const pathParams = new URLSearchParams(window.location.search);
 const plantId = pathParams.get("id");
 
+function setRadioValue(form, name, value) {
+  const input = form.querySelector(`input[name="${name}"][value="${value}"]`);
+  if (input) input.checked = true;
+}
+
 function populateForm(form, plant) {
   form.common_name.value = plant.common_name || "";
   form.scientific_name.value = plant.scientific_name || "";
   form.nick_name.value = plant.nick_name || "";
   form.location.value = plant.location || "";
   form.date_acquired.value = plant.date_acquired || "";
-  form.status.value = plant.status || "healthy";
+  setRadioValue(form, "status", plant.status || "healthy");
   form.notes.value = plant.notes || "";
-  form.humidity.value = plant.preference?.humidity || "medium";
+  setRadioValue(form, "humidity", plant.preference?.humidity || "medium");
   form.temperature.value = plant.preference?.temperature || "";
   form.watering.value = plant.preference?.watering || "";
   form.light.value = plant.preference?.light || "brightIndirect";

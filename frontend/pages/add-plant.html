@@ -26,12 +26,12 @@
           <fieldset>
             <legend>1 — Identity</legend>
             <div class="form-grid">
-              <div class="form-input">
+              <div class="form-input mobile-span-2">
                 <label for="common_name">Common name</label>
                 <input type="text" id="common_name" name="common_name" placeholder="Monstera">
               </div>
 
-              <div class="form-input">
+              <div class="form-input mobile-span-2">
                 <label for="scientific_name">Scientific name</label>
                 <input type="text" id="scientific_name" name="scientific_name" placeholder="Monstera deliciosa">
               </div>
@@ -51,13 +51,22 @@
                 <input type="date" id="date_acquired" name="date_acquired">
               </div>
 
-              <div class="form-input">
-                <label for="status">Status</label>
-                <select id="status" name="status">
-                  <option value="healthy">Healthy</option>
-                  <option value="sick">Sick</option>
-                  <option value="dead">Dead</option>
-                </select>
+              <div class="form-input span-2">
+                <span class="form-input-label">Status</span>
+                <div class="pill-group" data-pill-group="status">
+                  <label class="pill-option">
+                    <input type="radio" name="status" value="healthy" checked>
+                    <span>Healthy</span>
+                  </label>
+                  <label class="pill-option">
+                    <input type="radio" name="status" value="sick">
+                    <span>Sick</span>
+                  </label>
+                  <label class="pill-option">
+                    <input type="radio" name="status" value="dead">
+                    <span>Dead</span>
+                  </label>
+                </div>
               </div>
             </div>
           </fieldset>
@@ -65,13 +74,22 @@
           <fieldset>
             <legend>2 — Care preferences</legend>
             <div class="form-grid">
-              <div class="form-input">
-                <label for="humidity">Humidity</label>
-                <select id="humidity" name="humidity">
-                  <option value="low">Low</option>
-                  <option value="medium" selected>Medium</option>
-                  <option value="high">High</option>
-                </select>
+              <div class="form-input span-2">
+                <span class="form-input-label">Humidity</span>
+                <div class="pill-group" data-pill-group="humidity">
+                  <label class="pill-option">
+                    <input type="radio" name="humidity" value="low">
+                    <span>Low</span>
+                  </label>
+                  <label class="pill-option">
+                    <input type="radio" name="humidity" value="medium" checked>
+                    <span>Medium</span>
+                  </label>
+                  <label class="pill-option">
+                    <input type="radio" name="humidity" value="high">
+                    <span>High</span>
+                  </label>
+                </div>
               </div>
 
               <div class="form-input">
