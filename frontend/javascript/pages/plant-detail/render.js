@@ -17,8 +17,28 @@ const ICONS = {
   delete: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 7h14M10 7V5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
 };
 
+const FIELD_ICONS = {
+  location: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.4" stroke="currentColor" stroke-width="1.6"/></svg>`,
+  calendar: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="4" y="5" width="16" height="15" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M4 9.5h16M8 3v3.5M16 3v3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`,
+  humidity: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 3s6.5 7.1 6.5 11.5a6.5 6.5 0 1 1-13 0C5.5 10.1 12 3 12 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>`,
+  temperature: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 14.5V5a2 2 0 1 0-4 0v9.5a4 4 0 1 0 4 0Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="10" cy="16.5" r="1.4" fill="currentColor"/></svg>`,
+  light: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.6"/><path d="M12 2.5v2.5M12 19v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12h2.5M19 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`,
+  watering: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 3s6.5 7.1 6.5 11.5a6.5 6.5 0 1 1-13 0C5.5 10.1 12 3 12 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>`,
+  checkDaily: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="4" stroke="currentColor" stroke-width="1.6"/><path d="M8 12.5l2.5 2.5L16.5 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  fertilize: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 21V13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M12 13C12 13 4 12.5 4 5.5C11 5.5 12 9 12 13Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 13C12 13 20 12.5 20 5.5C13 5.5 12 9 12 13Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>`,
+};
+
 function statusClass(status) {
   return STATUS_LABEL[status] ? status : "dead";
+}
+
+function renderField(iconKey, label, value) {
+  return `
+    <div class="detail-field">
+      <div class="k"><span class="k-icon">${FIELD_ICONS[iconKey]}</span>${label}</div>
+      <div class="v">${value}</div>
+    </div>
+  `;
 }
 
 function renderWateringHistory(plantId) {
@@ -152,8 +172,8 @@ export function renderPlantDetails(plant) {
             <span class="sci">${scientificName}</span>
           </div>
           <div class="meta-row">
-            <div class="detail-field"><div class="k">Location</div><div class="v">${location}</div></div>
-            <div class="detail-field"><div class="k">Acquired</div><div class="v">${dateAcquired}</div></div>
+            ${renderField("location", "Location", location)}
+            ${renderField("calendar", "Acquired", dateAcquired)}
           </div>
         </div>
 
@@ -161,18 +181,18 @@ export function renderPlantDetails(plant) {
           <div class="detail-section">
             <div class="section-label">Care preferences</div>
             <div class="detail-grid">
-              <div class="detail-field"><div class="k">Humidity</div><div class="v">${humidityPreference}</div></div>
-              <div class="detail-field"><div class="k">Temperature</div><div class="v">${temperaturePreference}</div></div>
-              <div class="detail-field"><div class="k">Light</div><div class="v">${lightPreference}</div></div>
-              <div class="detail-field"><div class="k">Watering</div><div class="v">${wateringPreference}</div></div>
+              ${renderField("humidity", "Humidity", humidityPreference)}
+              ${renderField("temperature", "Temperature", temperaturePreference)}
+              ${renderField("light", "Light", lightPreference)}
+              ${renderField("watering", "Watering", wateringPreference)}
             </div>
           </div>
 
           <div class="detail-section">
             <div class="section-label">Routine</div>
             <div class="detail-grid">
-              <div class="detail-field"><div class="k">Check daily</div><div class="v">${checkDaily}</div></div>
-              <div class="detail-field"><div class="k">Fertilize</div><div class="v">${fertilizeFrequency}</div></div>
+              ${renderField("checkDaily", "Check daily", checkDaily)}
+              ${renderField("fertilize", "Fertilize", fertilizeFrequency)}
             </div>
           </div>
 

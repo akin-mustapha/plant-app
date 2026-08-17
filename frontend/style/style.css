@@ -260,7 +260,7 @@ button:disabled {
 
 .plant-card {
   background: var(--paper-field);
-  border: 1px solid var(--hairline);
+  border: 1px solid var(--border);
   border-radius: 10px;
   overflow: hidden;
   cursor: pointer;
@@ -632,7 +632,7 @@ button:disabled {
 
 .plant-detail-heading {
   background: var(--paper-field);
-  border: 1px solid var(--hairline);
+  border: 1px solid var(--border);
   border-radius: 10px;
   padding: 20px 22px;
   display: flex;
@@ -681,7 +681,7 @@ button:disabled {
 
 .detail-section {
   background: var(--paper-field);
-  border: 1px solid var(--hairline);
+  border: 1px solid var(--border);
   border-radius: 10px;
   padding: 20px 22px;
   display: flex;
@@ -710,8 +710,19 @@ button:disabled {
 }
 
 .detail-field .k {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 13px;
   color: var(--ink-faint);
+}
+
+.k-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-faint);
+  flex-shrink: 0;
 }
 
 .detail-field .v {
@@ -913,7 +924,7 @@ fieldset legend,
   .plant-detail {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 16px;
   }
 
   .plant-detail-left,
@@ -963,25 +974,25 @@ fieldset legend,
 
   .plant-grid {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 14px;
   }
 
   .plant-card {
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 10px 14px;
+    gap: 16px;
+    padding: 16px 18px;
   }
 
   .plant-image-wrap {
-    width: 48px;
-    height: 48px;
+    width: 64px;
+    height: 64px;
     flex-shrink: 0;
     border-radius: 8px;
   }
 
   .plant-image-wrap .plant-image-initial {
-    font-size: 22px;
+    font-size: 28px;
   }
 
   .plant-image-wrap .plant-image-note {
@@ -992,7 +1003,7 @@ fieldset legend,
     padding: 0;
     flex: 1;
     min-width: 0;
-    gap: 2px;
+    gap: 4px;
   }
 
   .plant-card-title-row {
@@ -1001,7 +1012,7 @@ fieldset legend,
   }
 
   .plant-card-title-row h2 {
-    font-size: 16px;
+    font-size: 18px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
