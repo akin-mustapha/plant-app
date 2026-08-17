@@ -42,7 +42,7 @@ function renderField(iconKey, label, value) {
 }
 
 function renderWateringHistory(activities) {
-  const { weeks, lastWateredDate } = buildWateringHistory(activities);
+  const { weeks, lastWateredDate } = buildWateringHistory(activities, 3);
 
   let lastMonth = null;
   const monthLabelsHtml = weeks
