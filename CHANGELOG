@@ -4,13 +4,24 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
-### Fixed
+### Added
 
-- Form input styling: set min-width to 0 for better layout consistency
+- Watering history widget on plant detail: a Mon–Sun heatmap spanning 6 months with a "last watered" summary, backed by placeholder per-plant data until a watering API exists
+- Icon action row (Photo/Water/Edit/Delete) replacing the old upload button/edit-delete row
+- Icons on care preference and info fields (location, acquired, humidity, temperature, light, watering, check daily, fertilize)
 
 ### Changed
 
+- Plant detail page layout: independent left/right columns so card heights no longer stretch to match a taller sibling; watering history card now sits directly after the plant info card, both on desktop and mobile
+- Card borders on plant detail and plant list switched from the low-contrast hairline token to the stronger border token so cards read clearly against the page background
+- Plant list cards enlarged on mobile (bigger thumbnail, padding, and title size) for easier tapping
+- Mobile card spacing aligned to the same 16px rhythm used on desktop
 - Terraform documentation added; API request handling improved (better error handling, requirements/providers/resources docs)
+
+### Fixed
+
+- Form input styling: set min-width to 0 for better layout consistency
+- Delete button hover no longer spills a pill-shaped background past the circular icon
 
 ## [0.3.0] - 2026-08-16 — Infrastructure & hardening
 
