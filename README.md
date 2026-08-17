@@ -35,6 +35,8 @@ docs/             API spec and supporting docs
 - **F2:** View All plant
 - **F3:** Update Created Plant
 - **F4:** Delete plant record
+- **F5:** Record when a plant has been watered
+- **F6:** View plant watering history
 
 ## Non-Functional Requirements
 
