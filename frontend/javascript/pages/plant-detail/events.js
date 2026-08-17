@@ -2,7 +2,7 @@ import { deletePlant, uploadPlantImage } from "../../api/plant.js";
 import { setStatus } from "../../utils.js";
 
 export function wireDeleteButton(plantId) {
-  const deleteButton = document.querySelector(".btn-delete");
+  const deleteButton = document.querySelector(".icon-btn--delete");
   if (!deleteButton) return;
 
   deleteButton.addEventListener("click", () => {

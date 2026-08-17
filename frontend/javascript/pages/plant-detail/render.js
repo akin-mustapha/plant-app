@@ -131,7 +131,7 @@ export function renderPlantDetails(plant) {
               <span class="icon-btn-circle">${ICONS.edit}</span>
               <span class="icon-btn-label">Edit</span>
             </a>
-            <button type="button" class="icon-btn icon-btn--delete btn-delete">
+            <button type="button" class="icon-btn icon-btn--delete">
               <span class="icon-btn-circle">${ICONS.delete}</span>
               <span class="icon-btn-label">Delete</span>
             </button>
