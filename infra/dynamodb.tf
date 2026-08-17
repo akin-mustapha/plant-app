@@ -44,6 +44,18 @@ resource "aws_dynamodb_table" "activity_type" {
 
   attribute {
     name = "activity_type_id"
-    type = "S"
+    type = "N"
   }
+}
+
+resource "aws_dynamodb_table_item" "watering" {
+  table_name = aws_dynamodb_table.activity_type.name
+  hash_key   = aws_dynamodb_table.activity_type.hash_key
+
+  item = jsonencode({
+    activity_type_id = { N = "1" }
+    description       = { S = "Watering" }
+    created           = { S = "2026-08-17" }
+    active            = { BOOL = true }
+  })
 }
