@@ -17,6 +17,16 @@ export function wireDeleteButton(plantId) {
   });
 }
 
+export function wireWaterButton(plantId) {
+  const waterButton = document.querySelector(".icon-btn--water");
+  if (!waterButton) return;
+
+  waterButton.addEventListener("click", () => {
+    // UI-only for now — no watering endpoint yet.
+    setStatus("Marked as watered today.");
+  });
+}
+
 export function wireImageUpload(plantId) {
   const plantImageInput = document.getElementById("plant-image");
   if (!plantImageInput) return;

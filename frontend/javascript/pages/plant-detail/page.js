@@ -1,7 +1,7 @@
 import { fetchPlantById } from "../../api/plant.js";
 import { setStatus, unwrap } from "../../utils.js";
 import { renderPlantDetails } from "./render.js";
-import { wireDeleteButton, wireImageUpload } from "./events.js";
+import { wireDeleteButton, wireImageUpload, wireWaterButton } from "./events.js";
 
 const pathParams = new URLSearchParams(window.location.search);
 const plantId = pathParams.get("id");
@@ -18,6 +18,7 @@ async function loadPlantDetails(id) {
     renderPlantDetails(plant);
     wireDeleteButton(id);
     wireImageUpload(id);
+    wireWaterButton(id);
     setStatus("");
   } catch (error) {
     setStatus(error.message || "Unable to load plant details.", true);

@@ -402,9 +402,23 @@ button:disabled {
 
 .plant-detail {
   display: grid;
-  grid-template-columns: 320px 1fr;
+  grid-template-columns: 420px 1fr;
   gap: 44px;
   padding-bottom: 56px;
+}
+
+.plant-detail-left {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.plant-detail-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
 }
 
 .plant-detail-media {
@@ -435,23 +449,178 @@ button:disabled {
   font-size: 76px;
 }
 
-.upload-label {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  width: 100%;
+/* ---------- icon action row ---------- */
+
+.icon-action-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
 }
 
-.upload-label input[type='file'] {
+.icon-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--font-body);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.icon-btn:hover {
+  text-decoration: none;
+}
+
+.icon-btn input[type='file'] {
   display: none;
 }
 
-.upload-hint {
+.icon-btn-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--paper-field);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+  transition: box-shadow 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.icon-btn:hover .icon-btn-circle {
+  border-color: var(--ink);
+}
+
+.icon-btn-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.icon-btn--water .icon-btn-circle {
+  background: var(--healthy-bg);
+  border-color: var(--healthy-bg);
+  color: var(--fern-dark);
+}
+
+.icon-btn--water:hover .icon-btn-circle {
+  border-color: var(--fern);
+}
+
+.icon-btn--delete .icon-btn-circle {
+  color: var(--terracotta);
+}
+
+.icon-btn--delete:hover .icon-btn-circle {
+  border-color: var(--error-border);
+  background: var(--error-bg);
+}
+
+.icon-btn--delete .icon-btn-label {
+  color: var(--terracotta);
+}
+
+/* ---------- watering history ---------- */
+
+.watering-history-summary {
+  font-size: 14px;
+}
+
+.watering-history-summary strong {
+  font-weight: 700;
+}
+
+.watering-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 100%;
+}
+
+.watering-month-labels,
+.watering-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+}
+
+.watering-month-labels {
+  margin-bottom: 2px;
+}
+
+.watering-row-label {
+  width: 26px;
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-faint);
+}
+
+.watering-row-cells,
+.watering-month-labels .watering-row-cells {
+  display: flex;
+  gap: 3px;
+  flex: 1;
+  min-width: 0;
+}
+
+.watering-month-label {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-faint);
+  text-align: left;
+  white-space: nowrap;
+  overflow: visible;
+  position: relative;
+}
+
+.watering-cell {
+  flex: 1;
+  min-width: 0;
+  aspect-ratio: 1 / 1;
+  border-radius: 3px;
+  background: var(--paper-bg);
+}
+
+.watering-cell--empty {
+  background: transparent;
+}
+
+.watering-cell--watered {
+  background: var(--healthy-dot);
+}
+
+.watering-legend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 12px;
   color: var(--ink-faint);
-  text-align: center;
-  margin: 0;
+}
+
+.watering-legend-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  background: var(--paper-bg);
+  display: inline-block;
+  margin-left: 8px;
+}
+
+.watering-legend-swatch:first-child {
+  margin-left: 0;
+}
+
+.watering-legend-swatch--watered {
+  background: var(--healthy-dot);
 }
 
 .plant-detail-main {
@@ -554,29 +723,6 @@ button:disabled {
   font-size: 15px;
   line-height: 1.65;
   max-width: 640px;
-}
-
-.detail-actions {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-  padding-top: 8px;
-}
-
-.detail-actions-hint {
-  font-size: 13px;
-  color: var(--ink-faint);
-  margin: 0;
-}
-
-.detail-actions-buttons {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
 }
 
 /* ---------- add plant form ---------- */
@@ -765,7 +911,30 @@ fieldset legend,
 
 @media (max-width: 720px) {
   .plant-detail {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .plant-detail-left,
+  .plant-detail-right {
+    display: contents;
+  }
+
+  .plant-detail-media {
+    order: 1;
+  }
+
+  .plant-detail-heading {
+    order: 2;
+  }
+
+  .watering-history {
+    order: 3;
+  }
+
+  .plant-detail-main {
+    order: 4;
   }
 
   .form-input.mobile-span-2 {
@@ -853,15 +1022,9 @@ fieldset legend,
     font-size: 19px;
   }
 
-  .detail-actions {
-    flex-direction: column-reverse;
-    justify-content: center;
-    text-align: center;
-  }
-
-  .detail-actions-buttons {
-    justify-content: center;
-    width: 100%;
+  .icon-btn-circle {
+    width: 44px;
+    height: 44px;
   }
 
   .app-title,
