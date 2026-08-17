@@ -3,7 +3,7 @@ resource "aws_apigatewayv2_api" "plant_api" {
   protocol_type = "HTTP"
 
   cors_configuration {
-    allow_origins = ["https://main.d2dl67h6vhyf6v.amplifyapp.com", "http://127.0.0.1:3000"]
+    allow_origins = ["https://main.d2dl67h6vhyf6v.amplifyapp.com", "http://127.0.0.1:3000", "http://127.0.0.1:3001"]
     allow_methods = ["GET", "POST", "PUT", "DELETE"]
     allow_headers = ["Content-Type"]
   }
