@@ -95,6 +95,44 @@ function renderWateringHistory(activities) {
   `;
 }
 
+export function renderPlantDetailsSkeleton() {
+  const detailsContainer = document.querySelector(".data-plant-details");
+  if (!detailsContainer) return;
+
+  detailsContainer.innerHTML = `
+    <div class="plant-detail-skeleton">
+      <div class="plant-detail-skeleton-left">
+        <div class="skel-block skel-photo"></div>
+        <div class="skel-action-row">
+          <div class="skel-circle skel-action-circle"></div>
+          <div class="skel-circle skel-action-circle"></div>
+          <div class="skel-circle skel-action-circle"></div>
+          <div class="skel-circle skel-action-circle"></div>
+        </div>
+        <div class="skel-card">
+          <div class="skel-line" style="width: 45%;"></div>
+          <div class="skel-block" style="height: 90px;"></div>
+        </div>
+      </div>
+      <div class="plant-detail-skeleton-right">
+        <div class="skel-title-row">
+          <div class="skel-line" style="width: 40%; height: 22px;"></div>
+          <div class="skel-block skel-pill"></div>
+        </div>
+        <div class="skel-line" style="width: 60%; margin-bottom: 20px;"></div>
+        <div class="skel-card">
+          <div class="skel-line" style="width: 30%;"></div>
+          <div class="skel-block" style="height: 60px;"></div>
+        </div>
+        <div class="skel-card">
+          <div class="skel-line" style="width: 25%;"></div>
+          <div class="skel-block" style="height: 44px;"></div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 export function renderPlantDetails(plant, activities = []) {
   const detailsContainer = document.querySelector(".data-plant-details");
 

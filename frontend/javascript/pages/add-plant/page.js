@@ -26,9 +26,49 @@ function populateForm(form, plant) {
   form.fertilizeFrequency.value = plant.routine?.fertilizeFrequency || "";
 }
 
+function renderFormSkeleton(form) {
+  const skeleton = document.createElement("div");
+  skeleton.className = "plant-form-skeleton";
+  skeleton.dataset.formSkeleton = "";
+  skeleton.innerHTML = `
+    ${[3, 3].map(
+      (fieldCount) => `
+        <div>
+          <div class="skel-line skel-section-label"></div>
+          <div class="skel-grid">
+            ${Array.from({ length: fieldCount })
+              .map(
+                (_, index) => `
+                  <div class="skel-field${index === fieldCount - 1 ? " skel-field--span-2" : ""}">
+                    <div class="skel-line skel-field-label"></div>
+                    <div class="skel-block skel-field-input"></div>
+                  </div>
+                `
+              )
+              .join("")}
+          </div>
+        </div>
+      `
+    ).join("")}
+    <div class="skel-actions">
+      <div class="skel-block skel-button"></div>
+      <div class="skel-block skel-button"></div>
+    </div>
+  `;
+
+  form.style.display = "none";
+  form.insertAdjacentElement("afterend", skeleton);
+}
+
+function removeFormSkeleton(form) {
+  const skeleton = document.querySelector("[data-form-skeleton]");
+  if (skeleton) skeleton.remove();
+  form.style.display = "";
+}
+
 async function loadPlantForEdit(form) {
   try {
-    setStatus("Loading plant details...");
+    renderFormSkeleton(form);
     const response = await fetchPlantById(plantId);
     const plant = unwrap(response);
     if (!plant) {
@@ -39,6 +79,8 @@ async function loadPlantForEdit(form) {
     setStatus("");
   } catch (error) {
     setStatus(error.message || "Unable to load plant details.", true);
+  } finally {
+    removeFormSkeleton(form);
   }
 }
 

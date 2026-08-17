@@ -1,6 +1,13 @@
 import { fetchAllPlants } from "../../api/plant.js";
-import { setStatus, unwrap } from "../../utils.js";
-import { renderPlants, statusClass } from "./render.js";
+import { setStatus, showNotification, unwrap } from "../../utils.js";
+import { renderPlants, renderSkeleton, statusClass } from "./render.js";
+
+function showPendingNotification() {
+  const pending = sessionStorage.getItem("notification");
+  if (!pending) return;
+  sessionStorage.removeItem("notification");
+  showNotification(pending);
+}
 
 let currentPlants = [];
 let currentFilter = "all";
@@ -38,13 +45,14 @@ function wireStatusFilters() {
 
 export async function loadPlants() {
   try {
-    setStatus("Loading plants...");
+    renderSkeleton();
     const response = await fetchAllPlants();
     const plants = unwrap(response);
     currentPlants = Array.isArray(plants) ? plants : [];
     renderPlants(currentPlants, currentFilter);
     updateFilterCounts(currentPlants);
     setStatus("");
+    showPendingNotification();
   } catch (error) {
     setStatus(error.message || "Unable to load plants.", true);
   }
