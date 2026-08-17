@@ -37,9 +37,15 @@ resource "aws_iam_role_policy" "plants_backend" {
           "dynamodb:PutItem",
           "dynamodb:GetItem",
           "dynamodb:Scan",
-          "dynamodb:UpdateItem"
+          "dynamodb:UpdateItem",
+          "dynamodb:Query"
         ]
-        Resource = aws_dynamodb_table.plants.arn
+        Resource = [
+          aws_dynamodb_table.plants.arn,
+          aws_dynamodb_table.activity.arn,
+          "${aws_dynamodb_table.activity.arn}/index/*",
+          aws_dynamodb_table.activity_type.arn
+        ]
       },
       {
         Sid      = "S3PlantImageUpload"
