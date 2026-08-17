@@ -1,0 +1,74 @@
+# Changelog
+
+All notable changes to this project are documented in this file.
+
+## [Unreleased]
+
+### Fixed
+
+- Form input styling: set min-width to 0 for better layout consistency
+
+### Changed
+
+- Terraform documentation added; API request handling improved (better error handling, requirements/providers/resources docs)
+
+## [0.3.0] - 2026-08-16 — Infrastructure & hardening
+
+### Added
+
+- Terraform infrastructure for AWS: S3, DynamoDB, API Gateway, IAM roles, Lambda, and Amplify
+- Plant management API: full CRUD operations and image upload handling
+- Date-acquired input on plant detail/form
+- Icons on plant detail action buttons
+
+### Changed
+
+- Plant editing functionality; S3 client configuration; API Gateway CORS settings
+- Plant form: radio-button pill selection for status and humidity
+- Plant detail and list UI: button styles, card layout, filter count display
+- Photo upload section on plant detail page
+- Form input styles: line height, box-sizing, custom select dropdown appearance
+- Image upload: added content type handling and upload confirmation step
+- `PlantRepository` attribute names updated to match DynamoDB schema
+- API base URL updated for the development environment
+
+### Fixed
+
+- Error handling: `PlantRepository` now raises exceptions properly; clearer API client error responses
+
+## [0.2.0] - 2026-08-15 — Backend & modularization
+
+### Added
+
+- Plant management features: forms, rendering, and API integration
+- Status filters on plant list/detail pages
+- Tech stack details added to README
+
+### Changed
+
+- Reorganized JavaScript into modular per-page scripts; updated HTML references for maintainability
+- Plant detail rendering and styling: scientific name handling, card layout, CSS polish
+- Plant detail and list pages: HTML structure and CSS improvements
+- Navigation updated across plant management pages
+
+## [0.1.0] - 2026-07-24 to 2026-08-13 — Initial UI (HTML/CSS/JS)
+
+### Added
+
+- Initial project scaffold with plain HTML/CSS/JS front end
+- Plant form for adding/editing plants
+- Plant detail rendering with delete functionality
+- Single-file `plant-backend.py` prototype and basic API client
+- OpenAPI specification; README functional/non-functional requirements
+- HTML-escaping utility for safer status message display
+- Environment variable support for API base URL configuration
+
+### Changed
+
+- Project restructure
+- API client refactored to support dynamic base URL and improved error handling
+
+### Fixed
+
+- Import statement for client module in plant API
+- Plant form bugs
