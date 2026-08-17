@@ -660,6 +660,14 @@ button:disabled {
   gap: 18px 32px;
 }
 
+.plant-detail-heading .nick,
+.plant-detail-heading .sci {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .plant-detail-heading .nick {
   color: var(--ink-faint);
 }
