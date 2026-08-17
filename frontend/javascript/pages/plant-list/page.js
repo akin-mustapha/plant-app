@@ -1,6 +1,13 @@
 import { fetchAllPlants } from "../../api/plant.js";
-import { setStatus, unwrap } from "../../utils.js";
+import { setStatus, showNotification, unwrap } from "../../utils.js";
 import { renderPlants, statusClass } from "./render.js";
+
+function showPendingNotification() {
+  const pending = sessionStorage.getItem("notification");
+  if (!pending) return;
+  sessionStorage.removeItem("notification");
+  showNotification(pending);
+}
 
 let currentPlants = [];
 let currentFilter = "all";
@@ -45,6 +52,7 @@ export async function loadPlants() {
     renderPlants(currentPlants, currentFilter);
     updateFilterCounts(currentPlants);
     setStatus("");
+    showPendingNotification();
   } catch (error) {
     setStatus(error.message || "Unable to load plants.", true);
   }

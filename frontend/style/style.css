@@ -1093,3 +1093,132 @@ fieldset legend,
     font-size: 13px;
   }
 }
+
+/* ---------- modal ---------- */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(42, 50, 38, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1000;
+  animation: modal-fade-in 0.15s ease;
+}
+
+@keyframes modal-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal {
+  background: var(--paper);
+  border-radius: 20px;
+  border: 1px solid var(--hairline);
+  box-shadow: 0 20px 48px rgba(42, 50, 38, 0.25);
+  padding: 28px;
+  width: 100%;
+  max-width: 380px;
+  animation: modal-rise-in 0.18s ease;
+}
+
+@keyframes modal-rise-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-title {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 12px;
+}
+
+.modal-message {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  margin: 0 0 24px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.modal-actions .btn {
+  flex: 1;
+  text-align: center;
+}
+
+.modal-btn-confirm--danger {
+  background: var(--terracotta);
+  border-color: var(--terracotta);
+  color: var(--paper);
+}
+
+.modal-btn-confirm--danger:hover {
+  background: #a04d28;
+  border-color: #a04d28;
+}
+
+.modal-btn-confirm--primary {
+  background: var(--fern);
+  border-color: var(--fern);
+  color: var(--paper);
+}
+
+.modal-btn-confirm--primary:hover {
+  background: var(--fern-dark);
+  border-color: var(--fern-dark);
+}
+
+/* ---------- notification ---------- */
+
+[data-notification] {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translate(-50%, -12px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--healthy-bg);
+  color: var(--fern-dark);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 14px 20px;
+  border-radius: 14px;
+  box-shadow: 0 12px 28px rgba(42, 50, 38, 0.18);
+  z-index: 1100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  max-width: calc(100vw - 32px);
+}
+
+[data-notification].notification--visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+[data-notification].notification--error {
+  background: var(--error-bg);
+  color: var(--error-fg);
+}
+
+.notification-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--fern-dark);
+  flex-shrink: 0;
+}
+
+[data-notification].notification--error .notification-dot {
+  background: var(--terracotta);
+}
