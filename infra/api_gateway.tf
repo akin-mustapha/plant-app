@@ -3,7 +3,7 @@ resource "aws_apigatewayv2_api" "plant_api" {
   protocol_type = "HTTP"
 
   cors_configuration {
-    allow_origins = ["https://main.d2dl67h6vhyf6v.amplifyapp.com", "http://127.0.0.1:3000"]
+    allow_origins = ["https://main.d2dl67h6vhyf6v.amplifyapp.com", "http://127.0.0.1:3000", "http://127.0.0.1:3001"]
     allow_methods = ["GET", "POST", "PUT", "DELETE"]
     allow_headers = ["Content-Type"]
   }
@@ -32,13 +32,17 @@ resource "aws_apigatewayv2_integration" "lambda" {
 
 locals {
   plant_routes = {
-    list_plants      = "GET /plants"
-    create_plant     = "POST /plants"
-    get_plant        = "GET /plants/{id}"
-    update_plant     = "PUT /plants/{id}"
-    delete_plant     = "DELETE /plants/{id}"
-    image_upload_url = "POST /plants/{id}/image/upload-url"
-    image_confirm    = "POST /plants/{id}/image/confirm"
+    list_plants        = "GET /plants"
+    create_plant       = "POST /plants"
+    get_plant          = "GET /plants/{id}"
+    update_plant       = "PUT /plants/{id}"
+    delete_plant       = "DELETE /plants/{id}"
+    image_upload_url   = "POST /plants/{id}/image/upload-url"
+    image_confirm      = "POST /plants/{id}/image/confirm"
+    create_activity    = "POST /plants/{id}/activities"
+    list_activities    = "GET /plants/{id}/activities"
+    delete_activity    = "DELETE /plants/{id}/activities/{activityId}"
+    list_activity_types = "GET /activity-types"
   }
 }
 

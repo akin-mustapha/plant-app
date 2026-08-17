@@ -1,4 +1,5 @@
 import { fetchPlantById } from "../../api/plant.js";
+import { fetchActivitiesByPlantId, fetchActivityTypes } from "../../api/activity.js";
 import { setStatus, unwrap } from "../../utils.js";
 import { renderPlantDetails } from "./render.js";
 import { wireDeleteButton, wireImageUpload, wireWaterButton } from "./events.js";
@@ -15,10 +16,19 @@ async function loadPlantDetails(id) {
       setStatus("Plant not found.", true);
       return;
     }
-    renderPlantDetails(plant);
+
+    const [activities, activityTypes] = await Promise.all([
+      fetchActivitiesByPlantId(id).catch(() => []),
+      fetchActivityTypes().catch(() => []),
+    ]);
+
+    renderPlantDetails(plant, activities);
     wireDeleteButton(id);
     wireImageUpload(id);
-    wireWaterButton(id);
+
+    const wateringType = (activityTypes || []).find((type) => type.description === "Watering");
+    wireWaterButton(id, wateringType?.activity_type_id);
+
     setStatus("");
   } catch (error) {
     setStatus(error.message || "Unable to load plant details.", true);

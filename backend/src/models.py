@@ -14,3 +14,22 @@ class Plant:
     routine: dict
     preference: dict
     active: bool
+
+
+@dataclass
+class Activity:
+    activity_id: str
+    plant_id: str
+    activity_type_id: str
+    activity_date: str
+    notes: str
+    created: str
+    active: bool
+
+
+@dataclass
+class ActivityType:
+    activity_type_id: str
+    description: str
+    created: str
+    active: bool

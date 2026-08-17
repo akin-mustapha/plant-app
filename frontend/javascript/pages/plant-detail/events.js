@@ -1,4 +1,5 @@
 import { deletePlant, uploadPlantImage } from "../../api/plant.js";
+import { logActivity } from "../../api/activity.js";
 import { setStatus } from "../../utils.js";
 
 export function wireDeleteButton(plantId) {
@@ -17,13 +18,23 @@ export function wireDeleteButton(plantId) {
   });
 }
 
-export function wireWaterButton(plantId) {
+export function wireWaterButton(plantId, wateringTypeId) {
   const waterButton = document.querySelector(".icon-btn--water");
-  if (!waterButton) return;
+  if (!waterButton || wateringTypeId == null) return;
 
   waterButton.addEventListener("click", () => {
-    // UI-only for now — no watering endpoint yet.
-    setStatus("Marked as watered today.");
+    waterButton.disabled = true;
+    setStatus("Marking as watered...");
+
+    logActivity(plantId, { activity_type_id: wateringTypeId })
+      .then(() => {
+        setStatus("Marked as watered today.");
+        window.location.reload();
+      })
+      .catch((error) => {
+        waterButton.disabled = false;
+        setStatus(error.message || "Unable to log watering.", true);
+      });
   });
 }
 

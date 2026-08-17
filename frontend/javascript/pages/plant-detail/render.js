@@ -41,8 +41,8 @@ function renderField(iconKey, label, value) {
   `;
 }
 
-function renderWateringHistory(plantId) {
-  const { weeks, lastWateredDate } = buildWateringHistory(plantId);
+function renderWateringHistory(activities) {
+  const { weeks, lastWateredDate } = buildWateringHistory(activities);
 
   let lastMonth = null;
   const monthLabelsHtml = weeks
@@ -95,7 +95,7 @@ function renderWateringHistory(plantId) {
   `;
 }
 
-export function renderPlantDetails(plant) {
+export function renderPlantDetails(plant, activities = []) {
   const detailsContainer = document.querySelector(".data-plant-details");
 
   if (!plant) {
@@ -158,7 +158,7 @@ export function renderPlantDetails(plant) {
           </div>
         </div>
 
-        ${renderWateringHistory(plantId)}
+        ${renderWateringHistory(activities)}
       </div>
 
       <div class="plant-detail-right">
