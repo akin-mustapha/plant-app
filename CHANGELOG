@@ -6,7 +6,9 @@ All notable changes to this project are documented in this file.
 
 ### Added
 
-- Watering history widget on plant detail: a Mon–Sun heatmap spanning 6 months with a "last watered" summary, backed by placeholder per-plant data until a watering API exists
+- Watering history API: `activity` and `activity_type` DynamoDB tables (with a `plant_id`/`activity_date` GSI for per-plant history lookups), backing `ActivityRepository`/`ActivityTypeRepository`, `ActivityService`/`ActivityTypeService`, and REST handlers — `POST/GET /plants/{id}/activities`, `DELETE /plants/{id}/activities/{activityId}`, `GET /activity-types`
+- Watering history widget on plant detail: a Mon–Sun heatmap spanning 6 months with a "last watered" summary, now backed by real logged activity data
+- Water button on plant detail logs a real watering activity via the API and refreshes the history
 - Icon action row (Photo/Water/Edit/Delete) replacing the old upload button/edit-delete row
 - Icons on care preference and info fields (location, acquired, humidity, temperature, light, watering, check daily, fertilize)
 
@@ -17,11 +19,14 @@ All notable changes to this project are documented in this file.
 - Plant list cards enlarged on mobile (bigger thumbnail, padding, and title size) for easier tapping
 - Mobile card spacing aligned to the same 16px rhythm used on desktop
 - Terraform documentation added; API request handling improved (better error handling, requirements/providers/resources docs)
+- Lambda IAM policy extended with `dynamodb:Query` and access to the new `activity`/`activity_type` tables and GSI
+- API Gateway CORS allowlist extended to include local dev origins
 
 ### Fixed
 
 - Form input styling: set min-width to 0 for better layout consistency
 - Delete button hover no longer spills a pill-shaped background past the circular icon
+- API responses containing DynamoDB numeric fields (e.g. `activity_type_id`) no longer 500 — `json_response` now serializes `Decimal` values correctly
 
 ## [0.3.0] - 2026-08-16 — Infrastructure & hardening
 
