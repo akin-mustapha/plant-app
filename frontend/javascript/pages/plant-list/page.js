@@ -1,6 +1,6 @@
 import { fetchAllPlants } from "../../api/plant.js";
 import { setStatus, showNotification, unwrap } from "../../utils.js";
-import { renderPlants, statusClass } from "./render.js";
+import { renderPlants, renderSkeleton, statusClass } from "./render.js";
 
 function showPendingNotification() {
   const pending = sessionStorage.getItem("notification");
@@ -45,7 +45,7 @@ function wireStatusFilters() {
 
 export async function loadPlants() {
   try {
-    setStatus("Loading plants...");
+    renderSkeleton();
     const response = await fetchAllPlants();
     const plants = unwrap(response);
     currentPlants = Array.isArray(plants) ? plants : [];

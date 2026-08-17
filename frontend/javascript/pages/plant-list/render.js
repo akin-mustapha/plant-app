@@ -37,6 +37,23 @@ function renderCard(plant) {
   `;
 }
 
+export function renderSkeleton(count = 5) {
+  const listContainer = document.querySelector("[data-plant-list]");
+  if (!listContainer) return;
+
+  const skeletonCard = `
+    <div class="plant-card plant-card--skeleton">
+      <div class="skel-block skeleton-thumb"></div>
+      <div class="skeleton-lines">
+        <div class="skel-line skeleton-line--wide"></div>
+        <div class="skel-line skeleton-line--narrow"></div>
+      </div>
+    </div>
+  `;
+
+  listContainer.innerHTML = skeletonCard.repeat(count);
+}
+
 export function renderPlants(plants, activeFilter = "all") {
   const listContainer = document.querySelector("[data-plant-list]");
   if (!listContainer) return;

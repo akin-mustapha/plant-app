@@ -1,7 +1,7 @@
 import { fetchPlantById } from "../../api/plant.js";
 import { fetchActivitiesByPlantId, fetchActivityTypes } from "../../api/activity.js";
 import { setStatus, showNotification, unwrap } from "../../utils.js";
-import { renderPlantDetails } from "./render.js";
+import { renderPlantDetails, renderPlantDetailsSkeleton } from "./render.js";
 import { wireDeleteButton, wireImageUpload, wireWaterButton } from "./events.js";
 
 const pathParams = new URLSearchParams(window.location.search);
@@ -16,7 +16,7 @@ function showPendingNotification() {
 
 async function loadPlantDetails(id) {
   try {
-    setStatus("Loading plant details...");
+    renderPlantDetailsSkeleton();
     const response = await fetchPlantById(id);
     const plant = unwrap(response);
     if (!plant) {
