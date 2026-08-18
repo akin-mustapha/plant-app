@@ -55,6 +55,27 @@ export function wireWaterButton(plantId, wateringTypeId, plantLabel = "this plan
   });
 }
 
+export function wireCollapsibleHeader() {
+  const header = document.querySelector("[data-collapsible-header]");
+  const photo = document.querySelector(".plant-detail-photo");
+  const topNav = document.querySelector("header");
+  if (!header || !photo) return;
+
+  let collapsed = false;
+
+  function onScroll() {
+    const navHeight = topNav ? topNav.getBoundingClientRect().height : 0;
+    const photoBottom = photo.getBoundingClientRect().bottom;
+    const shouldCollapse = photoBottom <= navHeight;
+    if (shouldCollapse === collapsed) return;
+    collapsed = shouldCollapse;
+    header.classList.toggle("is-collapsed", collapsed);
+  }
+
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+}
+
 export function wireImageUpload(plantId) {
   const plantImageInput = document.getElementById("plant-image");
   if (!plantImageInput) return;

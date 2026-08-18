@@ -2,7 +2,7 @@ import { fetchPlantById } from "../../api/plant.js";
 import { fetchActivitiesByPlantId, fetchActivityTypes } from "../../api/activity.js";
 import { setStatus, showNotification, unwrap } from "../../utils.js";
 import { renderPlantDetails, renderPlantDetailsSkeleton } from "./render.js";
-import { wireDeleteButton, wireImageUpload, wireWaterButton } from "./events.js";
+import { wireCollapsibleHeader, wireDeleteButton, wireImageUpload, wireWaterButton } from "./events.js";
 
 const pathParams = new URLSearchParams(window.location.search);
 const plantId = pathParams.get("id");
@@ -34,6 +34,7 @@ async function loadPlantDetails(id) {
     const plantLabel = hasNickname ? plant.nick_name : plant.common_name || "this plant";
     wireDeleteButton(id, plantLabel);
     wireImageUpload(id);
+    wireCollapsibleHeader();
 
     const wateringType = (activityTypes || []).find((type) => type.description === "Watering");
     wireWaterButton(id, wateringType?.activity_type_id, plantLabel);

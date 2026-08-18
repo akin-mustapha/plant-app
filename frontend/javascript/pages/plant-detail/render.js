@@ -15,11 +15,14 @@ const ICONS = {
   water: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3s6.5 7.1 6.5 11.5a6.5 6.5 0 1 1-13 0C5.5 10.1 12 3 12 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>`,
   edit: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 20h4L18.5 9.5a2.1 2.1 0 0 0-3-3L5 17v3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>`,
   delete: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 7h14M10 7V5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  back: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
 };
 
 const FIELD_ICONS = {
   location: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.4" stroke="currentColor" stroke-width="1.6"/></svg>`,
   calendar: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="4" y="5" width="16" height="15" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M4 9.5h16M8 3v3.5M16 3v3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`,
+  species: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3 11.5 11.5 3H19a2 2 0 0 1 2 2v7.5l-8.5 8.5a1.5 1.5 0 0 1-2.1 0L3 12.6a1.5 1.5 0 0 1 0-2.1Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="15.5" cy="8.5" r="1.4" fill="currentColor"/></svg>`,
+  status: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3 12h4l2-7 4 14 2-7h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   humidity: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 3s6.5 7.1 6.5 11.5a6.5 6.5 0 1 1-13 0C5.5 10.1 12 3 12 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>`,
   temperature: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 14.5V5a2 2 0 1 0-4 0v9.5a4 4 0 1 0 4 0Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="10" cy="16.5" r="1.4" fill="currentColor"/></svg>`,
   light: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.6"/><path d="M12 2.5v2.5M12 19v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12h2.5M19 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`,
@@ -173,9 +176,17 @@ export function renderPlantDetails(plant, activities = []) {
 
       <div class="plant-detail-left">
         <div class="plant-detail-media">
-          <div class="plant-detail-photo">${photo}</div>
+          <div class="plant-detail-photo">
+            ${photo}
+          </div>
+        </div>
 
-          <div class="icon-action-row">
+        <div class="icon-action-row" data-collapsible-header>
+          <div class="collapsed-strip-row">
+            <div class="collapsed-strip-title">${nickname !== "No nickname" ? nickname : name}</div>
+          </div>
+
+          <div class="icon-action-row-buttons">
             <label class="icon-btn" for="plant-image">
               <span class="icon-btn-circle">${ICONS.photo}</span>
               <span class="icon-btn-label">Photo</span>
@@ -201,15 +212,13 @@ export function renderPlantDetails(plant, activities = []) {
 
       <div class="plant-detail-right">
         <div class="plant-detail-heading">
-          <div class="title-row">
-            <h2>${name}</h2>
-            <span class="status-chip status-chip--${status}">${statusLabel}</span>
-          </div>
           <div class="name-sci-row">
+            <h2 class="plant-name">${name}</h2>
             <span class="nick">&ldquo;${nickname}&rdquo;</span>
-            <span class="sci">${scientificName}</span>
           </div>
           <div class="meta-row">
+            ${renderField("species", "Scientific name", scientificName)}
+            ${renderField("status", "Health status", `<span class="status-chip status-chip--${status}">${statusLabel}</span>`)}
             ${renderField("location", "Location", location)}
             ${renderField("calendar", "Acquired", dateAcquired)}
           </div>
