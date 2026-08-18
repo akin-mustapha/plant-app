@@ -61,9 +61,9 @@ textarea::placeholder {
 }
 
 main {
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 40px;
 }
 
 header {
@@ -73,13 +73,13 @@ header {
 }
 
 .header-inner {
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 20px 24px;
+  padding: 20px 40px;
 }
 
 header h1 {
@@ -601,7 +601,7 @@ button:disabled {
 
 .plant-detail {
   display: grid;
-  grid-template-columns: 420px 1fr;
+  grid-template-columns: minmax(420px, 1.1fr) 1fr;
   gap: 44px;
   padding-bottom: 56px;
 }
@@ -629,7 +629,7 @@ button:disabled {
 .plant-detail-photo {
   background: #EAF0E5;
   border-radius: 10px;
-  height: 280px;
+  height: 480px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -650,7 +650,11 @@ button:disabled {
 
 /* ---------- icon action row ---------- */
 
-.icon-action-row {
+.collapsed-strip-row {
+  display: none;
+}
+
+.icon-action-row-buttons {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 8px;
@@ -839,41 +843,32 @@ button:disabled {
   gap: 8px;
 }
 
-.plant-detail-heading .title-row {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: start;
-  gap: 14px;
-}
-
-.plant-detail-heading h2 {
-  font-family: var(--font-serif);
-  font-weight: 700;
-  font-size: 24px;
-  margin: 0;
-}
-
 .plant-detail-heading .name-sci-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px 32px;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px 14px;
 }
 
-.plant-detail-heading .nick,
-.plant-detail-heading .sci {
+.plant-detail-heading .plant-name {
+  margin: 0;
   min-width: 0;
+  max-width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--ink);
 }
 
 .plant-detail-heading .nick {
-  color: var(--ink-faint);
-}
-
-.plant-detail-heading .sci {
-  font-size: 15px;
-  font-style: italic;
+  min-width: 0;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: var(--ink-faint);
 }
 
@@ -1128,6 +1123,10 @@ fieldset legend,
 }
 
 @media (max-width: 720px) {
+  main {
+    padding: 0 24px;
+  }
+
   .plant-detail {
     display: flex;
     flex-direction: column;
@@ -1141,18 +1140,29 @@ fieldset legend,
 
   .plant-detail-media {
     order: 1;
+    margin: 0 -24px -16px;
   }
 
-  .plant-detail-heading {
+  .plant-detail-photo {
+    border-radius: 0;
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+
+  .icon-action-row {
     order: 2;
   }
 
-  .watering-history {
+  .plant-detail-heading {
     order: 3;
   }
 
-  .plant-detail-main {
+  .watering-history {
     order: 4;
+  }
+
+  .plant-detail-main {
+    order: 5;
   }
 
   .form-input.mobile-span-2 {
@@ -1266,8 +1276,59 @@ fieldset legend,
     height: 12px;
   }
 
-  .plant-detail-heading h2 {
-    font-size: 19px;
+  .plant-detail-heading .plant-name {
+    display: none;
+  }
+
+  .plant-detail-heading .nick {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--ink);
+  }
+
+  header:has(.plant-detail-title-link) {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    margin-bottom: 0;
+  }
+
+  header:has(.plant-detail-title-link) .header-inner {
+    padding: 12px 16px;
+  }
+
+  [data-collapsible-header] {
+    position: sticky;
+    top: 65px;
+    z-index: 10;
+    background: var(--paper);
+    margin: 0 -24px;
+    padding: 12px 24px 16px;
+    border-radius: 0 0 16px 16px;
+    box-shadow: 0 0 0 rgba(42, 50, 38, 0);
+    transition: box-shadow 0.2s ease;
+  }
+
+  .collapsed-strip-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  [data-collapsible-header].is-collapsed {
+    box-shadow: 0 8px 20px rgba(42, 50, 38, 0.12);
+  }
+
+  .collapsed-strip-title {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 24px;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .icon-btn-circle {
@@ -1283,29 +1344,22 @@ fieldset legend,
   .plant-detail-title-link {
     display: flex;
     align-items: center;
-    gap: 12px;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    background: var(--paper-field);
     color: var(--ink);
     text-decoration: none;
-    font-family: var(--font-serif);
-    font-weight: 700;
-    font-size: 19px;
-    min-width: 0;
   }
 
   .plant-detail-title-link::before {
     content: '←';
-    flex-shrink: 0;
+    font-size: 18px;
   }
 
   .plant-detail-title-link span {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .plant-detail-title-link .nick {
-    color: var(--ink-faint);
-    font-weight: 400;
+    display: none;
   }
 
   .header-inner {
