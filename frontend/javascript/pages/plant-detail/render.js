@@ -183,7 +183,7 @@ export function renderPlantDetails(plant, activities = []) {
 
         <div class="icon-action-row" data-collapsible-header>
           <div class="collapsed-strip-row">
-            <div class="collapsed-strip-title">${nickname !== "No nickname" ? nickname : name}</div>
+            <div class="collapsed-strip-title">${name}</div>
           </div>
 
           <div class="icon-action-row-buttons">
