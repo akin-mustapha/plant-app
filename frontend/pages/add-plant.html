@@ -46,6 +46,17 @@
                 <input type="text" id="location" name="location" placeholder="Living room">
               </div>
 
+              <div class="form-input">
+                <label for="window_direction">Window direction</label>
+                <select id="window_direction" name="window_direction">
+                  <option value="">Not specified</option>
+                  <option value="north">North-facing</option>
+                  <option value="east">East-facing</option>
+                  <option value="south">South-facing</option>
+                  <option value="west">West-facing</option>
+                </select>
+              </div>
+
               <div class="form-input span-2">
                 <span class="form-input-label">Status</span>
                 <div class="pill-group" data-pill-group="status">
@@ -97,7 +108,7 @@
                 <input type="date" id="date_acquired" name="date_acquired">
               </div>
 
-              <div class="form-input span-2">
+              <div class="form-input">
                 <label for="light">Light</label>
                 <select id="light" name="light">
                   <option value="brightIndirect">Bright indirect</option>
@@ -107,8 +118,31 @@
               </div>
 
               <div class="form-input span-2">
+                <span class="form-input-label">Water need</span>
+                <div class="pill-group" data-pill-group="water_need">
+                  <label class="pill-option">
+                    <input type="radio" name="water_need" value="low">
+                    <span>Low</span>
+                  </label>
+                  <label class="pill-option">
+                    <input type="radio" name="water_need" value="medium" checked>
+                    <span>Medium</span>
+                  </label>
+                  <label class="pill-option">
+                    <input type="radio" name="water_need" value="high">
+                    <span>High</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-input span-2">
                 <label for="watering">Watering instructions</label>
                 <textarea id="watering" name="watering" rows="2" placeholder="Water when the top 5 cm of soil is dry — roughly weekly in summer, every two weeks in winter."></textarea>
+              </div>
+
+              <div class="form-input span-2">
+                <label for="avoid">Avoid</label>
+                <input type="text" id="avoid" name="avoid" placeholder="Cold drafts, direct midday sun">
               </div>
             </div>
           </fieldset>

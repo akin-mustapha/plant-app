@@ -4,7 +4,7 @@ import { setStatus, showNotification } from "../../utils.js";
 import { confirmModal } from "../../modal.js";
 
 export function wireDeleteButton(plantId, plantLabel = "this plant") {
-  const deleteButton = document.querySelector(".icon-btn--delete");
+  const deleteButton = document.querySelector(".btn-delete");
   if (!deleteButton) return;
 
   deleteButton.addEventListener("click", async () => {
@@ -28,7 +28,7 @@ export function wireDeleteButton(plantId, plantLabel = "this plant") {
 }
 
 export function wireWaterButton(plantId, wateringTypeId, plantLabel = "this plant") {
-  const waterButton = document.querySelector(".icon-btn--water");
+  const waterButton = document.querySelector(".icon-btn--water-now");
   if (!waterButton || wateringTypeId == null) return;
 
   waterButton.addEventListener("click", async () => {
@@ -55,25 +55,32 @@ export function wireWaterButton(plantId, wateringTypeId, plantLabel = "this plan
   });
 }
 
-export function wireCollapsibleHeader() {
-  const header = document.querySelector("[data-collapsible-header]");
-  const photo = document.querySelector(".plant-detail-photo");
-  const topNav = document.querySelector("header");
-  if (!header || !photo) return;
+export function wireFertilizeButton(plantId, fertilizingTypeId, plantLabel = "this plant") {
+  const fertilizeButton = document.querySelector(".icon-btn--fertilize-now");
+  if (!fertilizeButton || fertilizingTypeId == null) return;
 
-  let collapsed = false;
+  fertilizeButton.addEventListener("click", async () => {
+    const confirmed = await confirmModal({
+      title: "Mark as fertilized?",
+      message: `This logs today in ${plantLabel}'s activity history.`,
+      confirmLabel: "Confirm",
+      variant: "primary",
+    });
+    if (!confirmed) return;
 
-  function onScroll() {
-    const navHeight = topNav ? topNav.getBoundingClientRect().height : 0;
-    const photoBottom = photo.getBoundingClientRect().bottom;
-    const shouldCollapse = photoBottom <= navHeight;
-    if (shouldCollapse === collapsed) return;
-    collapsed = shouldCollapse;
-    header.classList.toggle("is-collapsed", collapsed);
-  }
+    fertilizeButton.disabled = true;
+    setStatus("");
 
-  onScroll();
-  window.addEventListener("scroll", onScroll, { passive: true });
+    logActivity(plantId, { activity_type_id: fertilizingTypeId })
+      .then(() => {
+        sessionStorage.setItem("notification", `Fertilized ${plantLabel} — logged for today.`);
+        window.location.reload();
+      })
+      .catch((error) => {
+        fertilizeButton.disabled = false;
+        showNotification(error.message || "Unable to log fertilizing.", true);
+      });
+  });
 }
 
 export function wireImageUpload(plantId) {
