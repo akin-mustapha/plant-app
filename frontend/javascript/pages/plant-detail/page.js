@@ -2,7 +2,12 @@ import { fetchPlantById } from "../../api/plant.js";
 import { fetchActivitiesByPlantId, fetchActivityTypes } from "../../api/activity.js";
 import { setStatus, showNotification, unwrap } from "../../utils.js";
 import { renderPlantDetails, renderPlantDetailsSkeleton } from "./render.js";
-import { wireCollapsibleHeader, wireDeleteButton, wireImageUpload, wireWaterButton } from "./events.js";
+import {
+  wireDeleteButton,
+  wireFertilizeButton,
+  wireImageUpload,
+  wireWaterButton,
+} from "./events.js";
 
 const pathParams = new URLSearchParams(window.location.search);
 const plantId = pathParams.get("id");
@@ -24,20 +29,28 @@ async function loadPlantDetails(id) {
       return;
     }
 
-    const [activities, activityTypes] = await Promise.all([
+    const [rawActivities, activityTypes] = await Promise.all([
       fetchActivitiesByPlantId(id).catch(() => []),
       fetchActivityTypes().catch(() => []),
     ]);
+
+    const typeById = new Map((activityTypes || []).map((type) => [type.activity_type_id, type.description]));
+    const activities = (rawActivities || []).map((activity) => ({
+      ...activity,
+      __typeDescription: typeById.get(activity.activity_type_id) || null,
+    }));
 
     renderPlantDetails(plant, activities);
     const hasNickname = plant.nick_name && plant.nick_name !== "No nickname";
     const plantLabel = hasNickname ? plant.nick_name : plant.common_name || "this plant";
     wireDeleteButton(id, plantLabel);
     wireImageUpload(id);
-    wireCollapsibleHeader();
 
     const wateringType = (activityTypes || []).find((type) => type.description === "Watering");
     wireWaterButton(id, wateringType?.activity_type_id, plantLabel);
+
+    const fertilizingType = (activityTypes || []).find((type) => type.description === "Fertilizing");
+    wireFertilizeButton(id, fertilizingType?.activity_type_id, plantLabel);
 
     setStatus("");
     showPendingNotification();

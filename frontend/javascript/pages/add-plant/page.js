@@ -15,6 +15,7 @@ function populateForm(form, plant) {
   form.scientific_name.value = plant.scientific_name || "";
   form.nick_name.value = plant.nick_name || "";
   form.location.value = plant.location || "";
+  form.window_direction.value = plant.preference?.window_direction || "";
   form.date_acquired.value = plant.date_acquired || "";
   setRadioValue(form, "status", plant.status || "healthy");
   form.notes.value = plant.notes || "";
@@ -22,6 +23,8 @@ function populateForm(form, plant) {
   form.temperature.value = plant.preference?.temperature || "";
   form.watering.value = plant.preference?.watering || "";
   form.light.value = plant.preference?.light || "brightIndirect";
+  setRadioValue(form, "water_need", plant.preference?.water_need || "medium");
+  form.avoid.value = plant.preference?.avoid || "";
   form.checkDaily.value = plant.routine?.checkDaily ? "on" : "";
   form.fertilizeFrequency.value = plant.routine?.fertilizeFrequency || "";
 }
@@ -101,6 +104,9 @@ function getFormData(form) {
       temperature: data.temperature || "",
       watering: data.watering || "",
       light: data.light || "brightIndirect",
+      water_need: data.water_need || "medium",
+      window_direction: data.window_direction || "",
+      avoid: data.avoid || "",
     },
     routine: {
       checkDaily: data.checkDaily === "on",

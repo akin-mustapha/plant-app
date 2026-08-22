@@ -18,6 +18,32 @@ const ICONS = {
   back: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
 };
 
+const WATER_NEED_LABEL = {
+  low: "Low",
+  medium: "Medium",
+  high: "High",
+};
+
+const LIGHT_LABEL = {
+  brightIndirect: "Bright indirect",
+  direct: "Direct",
+  lowLight: "Low light",
+};
+
+const WINDOW_DIRECTION_LABEL = {
+  north: "North-facing window",
+  east: "East-facing window",
+  south: "South-facing window",
+  west: "West-facing window",
+};
+
+const WINDOW_DIRECTION_SHORT_LABEL = {
+  north: "North-facing",
+  east: "East-facing",
+  south: "South-facing",
+  west: "West-facing",
+};
+
 const FIELD_ICONS = {
   location: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.4" stroke="currentColor" stroke-width="1.6"/></svg>`,
   calendar: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="4" y="5" width="16" height="15" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M4 9.5h16M8 3v3.5M16 3v3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`,
@@ -29,10 +55,121 @@ const FIELD_ICONS = {
   watering: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 3s6.5 7.1 6.5 11.5a6.5 6.5 0 1 1-13 0C5.5 10.1 12 3 12 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>`,
   checkDaily: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="4" stroke="currentColor" stroke-width="1.6"/><path d="M8 12.5l2.5 2.5L16.5 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   fertilize: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 21V13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M12 13C12 13 4 12.5 4 5.5C11 5.5 12 9 12 13Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 13C12 13 20 12.5 20 5.5C13 5.5 12 9 12 13Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>`,
+  avoid: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.6"/><path d="M6.3 17.7 17.7 6.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`,
 };
 
 function statusClass(status) {
   return STATUS_LABEL[status] ? status : "dead";
+}
+
+function careDurationLabel(dateAcquired) {
+  if (!dateAcquired) return null;
+  const acquired = new Date(dateAcquired);
+  if (Number.isNaN(acquired.getTime())) return null;
+
+  const today = new Date();
+  let months = (today.getFullYear() - acquired.getFullYear()) * 12 + (today.getMonth() - acquired.getMonth());
+  if (today.getDate() < acquired.getDate()) months -= 1;
+  months = Math.max(0, months);
+
+  if (months < 1) return "In your care less than a month";
+  if (months === 1) return "In your care 1 month";
+  if (months < 24) return `In your care ${months} months`;
+  const years = Math.floor(months / 12);
+  return `In your care ${years} year${years === 1 ? "" : "s"}`;
+}
+
+function daysBetween(a, b) {
+  const msPerDay = 1000 * 60 * 60 * 24;
+  const start = new Date(a);
+  start.setHours(0, 0, 0, 0);
+  const end = new Date(b);
+  end.setHours(0, 0, 0, 0);
+  return Math.round((end - start) / msPerDay);
+}
+
+function parseWateringIntervalDays(wateringPreference) {
+  if (!wateringPreference) return null;
+  const match = String(wateringPreference).match(/every\s+(\d+)\s+day/i) || String(wateringPreference).match(/(\d+)\s*-?\s*day/i);
+  if (match) return Number(match[1]);
+  if (/week/i.test(wateringPreference)) return 7;
+  return null;
+}
+
+function renderNextUpBanner(plant, activities, wateringLabel) {
+  const wateredDates = (activities || [])
+    .filter((activity) => activity.__typeDescription === "Watering")
+    .map((activity) => new Date(activity.activity_date))
+    .sort((a, b) => b - a);
+
+  const lastWatered = wateredDates[0] || null;
+  const intervalDays = parseWateringIntervalDays(plant.preference?.watering) || 7;
+  const today = new Date();
+
+  let headline = "No watering logged yet";
+  let subtext = "Log a watering to start tracking this plant's rhythm.";
+
+  if (lastWatered) {
+    const daysSince = daysBetween(lastWatered, today);
+    const daysUntil = intervalDays - daysSince;
+
+    if (daysUntil > 0) {
+      headline = `Water in ${daysUntil} day${daysUntil === 1 ? "" : "s"}`;
+    } else if (daysUntil === 0) {
+      headline = "Water today";
+    } else {
+      headline = `Overdue by ${Math.abs(daysUntil)} day${Math.abs(daysUntil) === 1 ? "" : "s"}`;
+    }
+
+    const lastWateredLabel = daysSince === 0 ? "today" : daysSince === 1 ? "1 day ago" : `${daysSince} days ago`;
+    subtext = `Last watered ${lastWateredLabel} &middot; ${escapeHtml(wateringLabel)}`;
+  }
+
+  return `
+    <div class="next-up-banner">
+      <div class="next-up-info">
+        <div class="next-up-label">Next up</div>
+        <div class="next-up-headline">${escapeHtml(headline)}</div>
+        <div class="next-up-subtext">${subtext}</div>
+      </div>
+      <div class="next-up-actions">
+        <button type="button" class="icon-btn icon-btn--water-now">
+          ${ICONS.water}<span>Water now</span>
+        </button>
+        <button type="button" class="icon-btn icon-btn--fertilize-now">
+          ${FIELD_ICONS.fertilize}<span>Fertilize</span>
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function renderGlanceStrip(plant) {
+  const light = LIGHT_LABEL[plant.preference?.light] || escapeHtml(plant.preference?.light || "Unknown");
+  const waterNeed = WATER_NEED_LABEL[plant.preference?.water_need] || "Medium";
+  const humidity = escapeHtml(plant.preference?.humidity || "Unknown");
+  const temperature = escapeHtml(plant.preference?.temperature || "Unknown");
+
+  return `
+    <div class="glance-strip">
+      <div class="glance-card">
+        <div class="glance-label">Light</div>
+        <div class="glance-value">${light}</div>
+      </div>
+      <div class="glance-card">
+        <div class="glance-label">Water need</div>
+        <div class="glance-value">${waterNeed}</div>
+      </div>
+      <div class="glance-card">
+        <div class="glance-label">Humidity</div>
+        <div class="glance-value">${humidity}</div>
+      </div>
+      <div class="glance-card">
+        <div class="glance-label">Temperature</div>
+        <div class="glance-value">${temperature}</div>
+      </div>
+    </div>
+  `;
 }
 
 function renderField(iconKey, label, value) {
@@ -45,7 +182,8 @@ function renderField(iconKey, label, value) {
 }
 
 function renderWateringHistory(activities) {
-  const { weeks, lastWateredDate } = buildWateringHistory(activities, 3);
+  const wateringActivities = (activities || []).filter((activity) => activity.__typeDescription === "Watering");
+  const { weeks, lastWateredDate } = buildWateringHistory(wateringActivities, 3);
 
   let lastMonth = null;
   const monthLabelsHtml = weeks
@@ -98,6 +236,19 @@ function renderWateringHistory(activities) {
   `;
 }
 
+function renderLocationCard(location, windowDirectionShort, dateAcquiredLabel) {
+  return `
+    <div class="detail-section location-card">
+      <div class="section-label">Location</div>
+      <div class="care-profile-table">
+        ${renderField("location", "Room", location)}
+        ${windowDirectionShort ? renderField("light", "Window", windowDirectionShort) : ""}
+        ${renderField("calendar", "Acquired", dateAcquiredLabel)}
+      </div>
+    </div>
+  `;
+}
+
 export function renderPlantDetailsSkeleton() {
   const detailsContainer = document.querySelector(".data-plant-details");
   if (!detailsContainer) return;
@@ -107,7 +258,6 @@ export function renderPlantDetailsSkeleton() {
       <div class="plant-detail-skeleton-left">
         <div class="skel-block skel-photo"></div>
         <div class="skel-action-row">
-          <div class="skel-circle skel-action-circle"></div>
           <div class="skel-circle skel-action-circle"></div>
           <div class="skel-circle skel-action-circle"></div>
           <div class="skel-circle skel-action-circle"></div>
@@ -150,12 +300,17 @@ export function renderPlantDetails(plant, activities = []) {
   const status = statusClass(plant.status);
   const statusLabel = STATUS_LABEL[status];
   const location = escapeHtml(plant.location || "Unknown");
+  const windowDirection = WINDOW_DIRECTION_LABEL[plant.preference?.window_direction] || null;
+  const windowDirectionShort = WINDOW_DIRECTION_SHORT_LABEL[plant.preference?.window_direction] || null;
+  const locationLine = windowDirection ? `${location} &middot; ${windowDirection}` : location;
   const dateAcquired = escapeHtml(plant.date_acquired || "Unknown");
+  const careDuration = careDurationLabel(plant.date_acquired);
   const notes = escapeHtml(plant.notes || "No notes available.");
-  const humidityPreference = escapeHtml(plant.preference?.humidity || "Unknown");
-  const temperaturePreference = escapeHtml(plant.preference?.temperature || "Unknown");
   const wateringPreference = escapeHtml(plant.preference?.watering || "Unknown");
-  const lightPreference = escapeHtml(plant.preference?.light || "Unknown");
+  const light = LIGHT_LABEL[plant.preference?.light] || escapeHtml(plant.preference?.light || "Unknown");
+  const waterNeed = WATER_NEED_LABEL[plant.preference?.water_need] || "Medium";
+  const humidity = escapeHtml(plant.preference?.humidity || "Unknown");
+  const temperature = escapeHtml(plant.preference?.temperature || "Unknown");
   const checkDaily = plant.routine?.checkDaily ? "Yes" : "No";
   const fertilizeFrequency = escapeHtml(plant.routine?.fertilizeFrequency || "Unknown");
   const imageUrl = plant.image_url ? escapeHtml(plant.image_url) : "";
@@ -180,74 +335,64 @@ export function renderPlantDetails(plant, activities = []) {
             ${photo}
           </div>
         </div>
-
-        <div class="icon-action-row" data-collapsible-header>
-          <div class="collapsed-strip-row">
-            <div class="collapsed-strip-title">${name}</div>
-          </div>
-
-          <div class="icon-action-row-buttons">
-            <label class="icon-btn" for="plant-image">
-              <span class="icon-btn-circle">${ICONS.photo}</span>
-              <span class="icon-btn-label">Photo</span>
-              <input type="file" id="plant-image" name="plant-image" accept="image/*" />
-            </label>
-            <button type="button" class="icon-btn icon-btn--water">
-              <span class="icon-btn-circle">${ICONS.water}</span>
-              <span class="icon-btn-label">Water</span>
-            </button>
-            <a class="icon-btn" href="add-plant.html?id=${plantId}">
-              <span class="icon-btn-circle">${ICONS.edit}</span>
-              <span class="icon-btn-label">Edit</span>
-            </a>
-            <button type="button" class="icon-btn icon-btn--delete">
-              <span class="icon-btn-circle">${ICONS.delete}</span>
-              <span class="icon-btn-label">Delete</span>
-            </button>
-          </div>
-        </div>
-
-        ${renderWateringHistory(activities)}
       </div>
 
       <div class="plant-detail-right">
         <div class="plant-detail-heading">
+          <div class="location-line">${locationLine}</div>
           <div class="name-sci-row">
             <h2 class="plant-name">${name}</h2>
-            <span class="nick">&ldquo;${nickname}&rdquo;</span>
+            <span class="plant-sci-name">${scientificName}</span>
           </div>
-          <div class="meta-row">
-            ${renderField("species", "Scientific name", scientificName)}
-            ${renderField("status", "Health status", `<span class="status-chip status-chip--${status}">${statusLabel}</span>`)}
-            ${renderField("location", "Location", location)}
-            ${renderField("calendar", "Acquired", dateAcquired)}
+          <div class="status-acquired-row">
+            <span class="status-chip status-chip--${status}">${statusLabel}</span>
+            ${careDuration ? `<span class="acquired-note">${careDuration}</span>` : ""}
           </div>
         </div>
 
-        <div class="plant-detail-main">
-          <div class="detail-section">
-            <div class="section-label">Care preferences</div>
-            <div class="detail-grid">
-              ${renderField("humidity", "Humidity", humidityPreference)}
-              ${renderField("temperature", "Temperature", temperaturePreference)}
-              ${renderField("light", "Light", lightPreference)}
-              ${renderField("watering", "Watering", wateringPreference)}
-            </div>
+        ${renderNextUpBanner(plant, activities, wateringPreference)}
+        ${renderGlanceStrip(plant)}
+      </div>
+
+      <div class="plant-detail-reference">
+        <div class="care-profile">
+          <div class="section-label">Care preferences</div>
+          <div class="care-profile-table">
+            ${renderField("species", "Plant type", scientificName)}
+            ${renderField("watering", "Water", waterNeed)}
+            ${renderField("light", "Light", light)}
+            ${renderField("humidity", "Humidity", humidity)}
+            ${renderField("temperature", "Temperature", temperature)}
           </div>
 
-          <div class="detail-section">
+          <div class="detail-section-notes">
             <div class="section-label">Routine</div>
-            <div class="detail-grid">
-              ${renderField("checkDaily", "Check daily", checkDaily)}
+            <div class="care-profile-table">
+              ${renderField("watering", "Watering", wateringPreference)}
               ${renderField("fertilize", "Fertilize", fertilizeFrequency)}
+              ${renderField("checkDaily", "Check daily", checkDaily)}
             </div>
           </div>
 
-          <div class="detail-section">
+          <div class="detail-section-notes">
             <div class="section-label">Notes</div>
             <div class="detail-notes">${notes}</div>
           </div>
         </div>
+
+        <div class="plant-detail-reference-side">
+          ${renderLocationCard(location, windowDirectionShort, dateAcquired)}
+          ${renderWateringHistory(activities)}
+        </div>
+      </div>
+
+      <div class="plant-detail-actions">
+        <label class="btn" for="plant-image">
+          Add photo
+          <input type="file" id="plant-image" name="plant-image" accept="image/*" />
+        </label>
+        <a class="btn" href="add-plant.html?id=${plantId}">Edit details</a>
+        <button type="button" class="btn btn-delete">Delete plant</button>
       </div>
     </div>
   `;

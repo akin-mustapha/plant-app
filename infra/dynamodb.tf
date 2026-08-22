@@ -59,3 +59,15 @@ resource "aws_dynamodb_table_item" "watering" {
     active            = { BOOL = true }
   })
 }
+
+resource "aws_dynamodb_table_item" "fertilizing" {
+  table_name = aws_dynamodb_table.activity_type.name
+  hash_key   = aws_dynamodb_table.activity_type.hash_key
+
+  item = jsonencode({
+    activity_type_id = { N = "2" }
+    description       = { S = "Fertilizing" }
+    created           = { S = "2026-08-22" }
+    active            = { BOOL = true }
+  })
+}
